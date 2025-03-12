@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura Editable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        header h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f8f9fa;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .invoice-view {
+            display: none; /* Oculta la vista de la factura inicialmente */
+        }
+
+        /* Estilos para el modal de confirmación */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            margin: 0 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.2em;
+            }
+
+            .form-group input {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Vista de edición -->
+        <div id="editView">
+            <header>
+                <h1>Factura Editable</h1>
+            </header>
+
+            <div class="form-group">
+                <label for="companyName">Nombre de la Empresa:</label>
+                <input type="text" id="companyName" placeholder="Ingrese el nombre de la empresa">
+            </div>
+
+            <div class="form-group">
+                <label for="clientName">Nombre del Cliente:</label>
+                <input type="text" id="clientName" placeholder="Ingrese el nombre del cliente">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceDate">Fecha:</label>
+                <input type="date" id="invoiceDate">
+            </div>
+
+            <div class="form-group">
+                <label for="repairDescription">Descripción de la Reparación:</label>
+                <input type="text" id="repairDescription" placeholder="Ingrese la descripción">
+            </div>
+
+            <div class="form-group">
+                <label for="repairPrice">Precio (₡):</label>
+                <input type="number" id="repairPrice" placeholder="Ingrese el precio en colones">
+            </div>
+
+            <button onclick="addRepair()">Agregar Reparación</button>
+
+            <table id="repairsTable">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Precio (₡)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Reparaciones se agregarán aquí dinámicamente -->
+                </tbody>
+            </table>
+
+            <div class="total">
+                <strong>Total:</strong>
+                <span id="totalAmount">₡0.00</span>
+            </div>
+
+            <button onclick="showInvoice()" style="background-color: #007bff; margin-top: 20px;">Generar Factura</button>
+        </div>
+
+        <!-- Vista de la factura -->
+        <div id="invoiceView" class="invoice-view">
+            <header>
+                <h1 id="invoiceCompanyName">Nombre de la Empresa</h1>
+            </header>
+
+            <div class="client-info">
+                <p><strong>Cliente:</strong> <span id="invoiceClientName"></span></p>
+                <p><strong>Fecha:</strong> <span id="invoiceDateDisplay"></span></p>
+            </div>
+
+            <table id="invoiceRepairsTable">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Precio (₡)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Reparaciones se mostrarán aquí -->
+                </tbody>
+            </table>
+
+            <div class="total">
+                <strong>Total:</strong>
+                <span id="invoiceTotalAmount">₡0.00</span>
+            </div>
+
+            <footer>
+                <p><strong id="footerCompanyName">Nombre de la Empresa</strong></p>
+            </footer>
+
+            <button onclick="goBack()" style="background-color: #dc3545; margin-top: 20px;">Volver a Editar</button>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>¿Estás seguro de que deseas eliminar esta reparación?</p>
+            <div class="modal-buttons">
+                <button onclick="confirmDelete()">Sí, eliminar</button>
+                <button onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let total = 0;
+        let rowToDelete = null;
+
+        function addRepair() {
+            const repairDescription = document.getElementById('repairDescription').value;
+            const repairPrice = parseFloat(document.getElementById('repairPrice').value);
+
+            if (repairDescription && !isNaN(repairPrice)) {
+                const tableBody = document.querySelector('#repairsTable tbody');
+                const newRow = tableBody.insertRow();
+
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+
+                cell1.textContent = repairDescription;
+                cell2.textContent = `₡${repairPrice.toFixed(2)}`;
+
+                // Agregar evento de clic a la fila para abrir el modal
+                newRow.onclick = () => openModal(newRow);
+
+                total += repairPrice;
+                document.getElementById('totalAmount').textContent = `₡${total.toFixed(2)}`;
+
+                // Limpiar campos de entrada
+                document.getElementById('repairDescription').value = '';
+                document.getElementById('repairPrice').value = '';
+            } else {
+                alert('Por favor, complete todos los campos correctamente.');
+            }
+        }
+
+        function openModal(row) {
+            rowToDelete = row;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            rowToDelete = null;
+        }
+
+        function confirmDelete() {
+            if (rowToDelete) {
+                const price = parseFloat(rowToDelete.cells[1].textContent.replace('₡', ''));
+                total -= price;
+                document.getElementById('totalAmount').textContent = `₡${total.toFixed(2)}`;
+                rowToDelete.remove();
+                closeModal();
+            }
+        }
+
+        function showInvoice() {
+            const companyName = document.getElementById('companyName').value;
+            const clientName = document.getElementById('clientName').value;
+            const invoiceDate = document.getElementById('invoiceDate').value;
+
+            if (!companyName || !clientName || !invoiceDate || total === 0) {
+                alert('Por favor, complete todos los campos y agregue al menos una reparación.');
+                return;
+            }
+
+            // Actualizar la vista de la factura
+            document.getElementById('invoiceCompanyName').textContent = companyName;
+            document.getElementById('invoiceClientName').textContent = clientName;
+            document.getElementById('invoiceDateDisplay').textContent = invoiceDate;
+            document.getElementById('invoiceTotalAmount').textContent = `₡${total.toFixed(2)}`;
+
+            // Copiar las reparaciones a la factura
+            const repairsTableBody = document.querySelector('#repairsTable tbody');
+            const invoiceTableBody = document.querySelector('#invoiceRepairsTable tbody');
+            invoiceTableBody.innerHTML = repairsTableBody.innerHTML;
+
+            // Mostrar la factura y ocultar la vista de edición
+            document.getElementById('editView').style.display = 'none';
+            document.getElementById('invoiceView').style.display = 'block';
+        }
+
+        function goBack() {
+            // Volver a la vista de edición
+            document.getElementById('editView').style.display = 'block';
+            document.getElementById('invoiceView').style.display = 'none';
+        }
+
+        // Actualizar el nombre de la empresa en el footer
+        document.getElementById('companyName').addEventListener('input', function() {
+            document.getElementById('footerCompanyName').textContent = this.value;
+        });
+    </script>
+</body>
+</html>
