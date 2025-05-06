@@ -3,107 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Facturas - Taller Fernando Retana</title>
+    <title>Generador de Facturas</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png" type="image/png">
-    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Facturas TFR"> <meta name="application-name" content="Facturas TFR"> <style>
-        /* Estilos base */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #e5e7eb; /* gray-200 */
-            color: #1f2937; /* gray-800 */
-        }
-        /* Estilos base de botones */
-        button, .btn {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        .container { max-width: 800px; }
+        h1, h2, h3 { color: #1d4ed8; /* blue-700 */ }
+        .btn {
             display: inline-flex; align-items: center; justify-content: center;
-            padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600;
-            cursor: pointer; transition: background-color 0.2s, transform 0.1s;
+            padding: 0.6rem 1.2rem; font-weight: 600; border-radius: 0.5rem; /* esquinas redondeadas */
+            transition: all 0.2s ease-in-out; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
             border: none; color: white; margin-top: 0.5rem; margin-right: 0.5rem; line-height: 1;
             white-space: nowrap;
         }
-        button:hover, .btn:hover { transform: translateY(-1px); }
-        button:active, .btn:active { transform: translateY(0px); }
+        button:hover, .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); }
+        button:active, .btn:active { transform: translateY(0px); box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); }
 
-        /* Botones específicos (colores definidos con utilidades en HTML) */
-        .btn-add:hover { background-color: #047857; }
-        .btn-generate:hover { background-color: #1d4ed8; }
-        .btn-back:hover { background-color: #b91c1c; }
-        .btn-print:hover { background-color: #4b5563; }
-        .btn-pdf { background-color: #ca8a04; } /* yellow-600 para PDF */
-        .btn-pdf:hover { background-color: #a16207; } /* yellow-700 */
-        .btn-delete-confirm:hover { background-color: #b91c1c; }
-        .btn-save-edit:hover { background-color: #1d4ed8; }
+        /* Botones específicos */
+        .btn-add { background-color: #059669; /* emerald-600 */ } .btn-add:hover { background-color: #047857; }
+        .btn-generate { background-color: #2563eb; /* blue-600 */ } .btn-generate:hover { background-color: #1d4ed8; }
+        /* .btn-back se define más abajo para la vista de factura */
+        /* .btn-print se define más abajo para la vista de factura */
+        /* .btn-pdf se define más abajo para la vista de factura */
+        .btn-delete-confirm { background-color: #dc2626; } .btn-delete-confirm:hover { background-color: #b91c1c; }
+        .btn-save-edit { background-color: #2563eb; } .btn-save-edit:hover { background-color: #1d4ed8; }
+        .btn-delete-from-edit, .btn-delete-list { background-color: #dc2626; }
         .btn-delete-from-edit:hover, .btn-delete-list:hover { background-color: #b91c1c; }
-        .btn-delete-cancel, .btn-cancel-edit, .btn-cancel-action { background-color: #d1d5db; color: #1f2937; }
-        .btn-delete-cancel:hover, .btn-cancel-edit:hover, .btn-cancel-action:hover { background-color: #9ca3af; }
-        .btn-view-action { background-color: #4f46e5; }
-        .btn-view-action:hover { background-color: #4338ca; }
-        .btn-list-nav { background-color: #6b7280; color: white; }
-        .btn-list-nav:hover { background-color: #4b5563; }
-        .btn-edit-invoice { background-color: #d97706; }
-        .btn-edit-invoice:hover { background-color: #b45309; }
+        .btn-delete-cancel, .btn-cancel-edit, .btn-cancel-action { background-color: #e5e7eb; color: #1f2937; } 
+        .btn-delete-cancel:hover, .btn-cancel-edit:hover, .btn-cancel-action:hover { background-color: #d1d5db; } 
+        .btn-view-action { background-color: #4f46e5; /* indigo-600 */ } .btn-view-action:hover { background-color: #4338ca; }
+        .btn-list-nav { background-color: #6b7280; } .btn-list-nav:hover { background-color: #4b5563; }
+        /* .btn-edit-invoice se define más abajo para la vista de factura */
 
-        /* Tabla de lista */
+
         #savedInvoicesTable th, #savedInvoicesTable td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #d1d5db; vertical-align: middle; }
         #savedInvoicesTable th { background-color: #f3f4f6; color: #374151; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
-        #savedInvoicesTable tbody tr { transition: background-color 0.15s; cursor: pointer; }
         #savedInvoicesTable tbody tr:hover { background-color: #f9fafb; }
 
-        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.5); }
-        #savedInvoiceActionModal .info-item { margin-bottom: 0.5rem; }
-        #savedInvoiceActionModal .info-label { font-weight: 600; color: #6b7280; margin-right: 0.5rem; }
-        #savedInvoiceActionModal .info-value { color: #1f2937; }
+        .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.6); }
+        .modal-content { background-color: #ffffff; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); padding: 1.5rem; width: 90%; max-width: 500px; }
+        
+        #invoiceView.active-fullscreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #ffffff; 
+            z-index: 1000; display: flex; flex-direction: column;
+            padding: 0; margin: 0; border-radius: 0; box-shadow: none; border: none;
+        }
 
-        /* --- Media Query para Responsividad Móvil --- */
+        #invoiceView.active-fullscreen .invoice-header-container { 
+            display: flex; justify-content: space-between; align-items: flex-start; 
+            padding: 1rem; border-bottom: 2px solid #343a40; 
+            background-color: #f8f9fa; flex-shrink: 0;
+        }
+        #invoiceView.active-fullscreen .invoice-logo-container {
+            flex-basis: 30%; max-width: 120px; 
+        }
+        #invoiceView.active-fullscreen #invoiceCompanyLogo {
+            display: block; max-height: 70px; width: auto;
+        }
+        #invoiceView.active-fullscreen .invoice-company-details {
+            flex-basis: 70%; text-align: right; 
+        }
+        #invoiceView.active-fullscreen #invoiceCompanyName {
+            font-size: 1.1rem; font-weight: 700; color: #212529; margin-bottom: 0.25rem;
+        }
+        #invoiceView.active-fullscreen .invoice-company-details p {
+            font-size: 0.75rem; color: #495057; line-height: 1.3; margin-bottom: 0.1rem;
+        }
+
+        #invoiceView.active-fullscreen .invoice-meta-info { 
+            display: flex; justify-content: space-between;
+            padding: 0.5rem 1rem; background-color: #e9ecef; 
+            font-size: 0.8rem; font-weight: 600; color: #343a40;
+            border-bottom: 1px solid #dee2e6; flex-shrink: 0;
+        }
+         #invoiceView.active-fullscreen .invoice-meta-info span { font-weight: normal; color: #212529;}
+
+        #invoiceView.active-fullscreen .invoice-content-area {
+            flex-grow: 1; overflow-y: auto; padding: 1rem;
+            background-color: #ffffff; 
+        }
+
+        #invoiceView.active-fullscreen .client-info {
+            padding: 0.75rem; margin-bottom: 1rem;
+            border: 1px solid #ced4da; border-radius: 0.375rem; 
+            background-color: #f8f9fa;
+        }
+        #invoiceView.active-fullscreen .client-info p {
+            font-size: 0.9rem; margin-bottom: 0.3rem; color: #212529;
+        }
+         #invoiceView.active-fullscreen .client-info p strong {
+            color: #343a40; font-weight: 600; min-width: 70px; display: inline-block;
+        }
+
+        #invoiceView.active-fullscreen #invoiceRepairsTable {
+            width: 100%; background-color: #ffffff;
+            border: 1px solid #dee2e6; border-radius: 0.375rem;
+            border-collapse: separate; border-spacing: 0; overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        #invoiceView.active-fullscreen #invoiceRepairsTable th {
+            background-color: #343a40; color: #ffffff;
+            font-size: 0.8rem; padding: 0.6rem; text-align: left;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        #invoiceView.active-fullscreen #invoiceRepairsTable td {
+            font-size: 0.9rem; padding: 0.6rem;
+            border-bottom: 1px solid #e9ecef; color: #212529;
+        }
+        #invoiceView.active-fullscreen #invoiceRepairsTable th:last-child,
+        #invoiceView.active-fullscreen #invoiceRepairsTable td:last-child {
+            text-align: right;
+        }
+        #invoiceView.active-fullscreen #invoiceRepairsTable tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        #invoiceView.active-fullscreen .total-section { 
+            margin-top: 1rem; padding-top: 1rem;
+            border-top: 2px solid #343a40; 
+        }
+        #invoiceView.active-fullscreen .total { text-align: right; }
+        #invoiceView.active-fullscreen .total strong {
+            font-size: 1rem; color: #343a40; font-weight: 700;
+        }
+        #invoiceView.active-fullscreen #invoiceTotalAmount {
+            font-size: 1.4rem; font-weight: 700; color: #0d6efd; 
+        }
+        
+        #invoiceView.active-fullscreen .invoice-notes {
+            margin-top: 1.5rem; padding: 0.75rem;
+            background-color: #f8f9fa; border-radius: 0.375rem;
+            font-size: 0.75rem; color: #495057;
+            border: 1px solid #dee2e6;
+        }
+        #invoiceView.active-fullscreen .invoice-notes strong {
+            display: block; margin-bottom: 0.25rem;
+            color: #343a40; font-weight: 600;
+        }
+
+        #invoiceView.active-fullscreen footer.invoice-footer-message { 
+            padding: 1rem; text-align: center; font-size: 0.8rem;
+            color: #6c757d; border-top: 1px solid #dee2e6; margin-top: 1rem;
+            background-color: #f8f9fa; flex-shrink: 0;
+        }
+        #invoiceView.active-fullscreen #footerCompanyName,
+        #invoiceView.active-fullscreen #footerCompanyPhone,
+        #invoiceView.active-fullscreen #footerCompanyAddress { display: none; }
+
+        #invoiceView.active-fullscreen .main-action-buttons {
+            padding: 0.75rem; background-color: #343a40; 
+            width: 100%; box-sizing: border-box; display: flex;
+            flex-wrap: wrap; justify-content: space-around; gap: 0.5rem;
+            flex-shrink: 0;
+        }
+        #invoiceView.active-fullscreen .main-action-buttons button {
+            flex: 1 1 calc(45% - 1rem); /* Ajustado para que quepan más botones si es necesario */
+            min-width: 100px; /* Reducido un poco */
+            margin: 0.25rem !important; font-size: 0.80rem; padding: 0.6rem 0.4rem; /* Ajustado */
+            border-radius: 0.375rem; 
+        }
+        /* Colores específicos para botones en la vista de factura */
+        #invoiceView.active-fullscreen .main-action-buttons #btnBackAction { background-color: #6c757d; } 
+        #invoiceView.active-fullscreen .main-action-buttons #btnBackAction:hover { background-color: #5a6268; }
+        #invoiceView.active-fullscreen .main-action-buttons #btnPrintAction { background-color: #0d6efd; } 
+        #invoiceView.active-fullscreen .main-action-buttons #btnPrintAction:hover { background-color: #0b5ed7; }
+        #invoiceView.active-fullscreen .main-action-buttons #btnPdfAction { background-color: #198754; } 
+        #invoiceView.active-fullscreen .main-action-buttons #btnPdfAction:hover { background-color: #157347; }
+        #invoiceView.active-fullscreen .main-action-buttons #editInvoiceButton { background-color: #ffc107; color: #000; } 
+        #invoiceView.active-fullscreen .main-action-buttons #editInvoiceButton:hover { background-color: #e0a800; }
+        #invoiceView.active-fullscreen .main-action-buttons #btnPrepareCapture { background-color: #17a2b8; } /* Teal para modo captura */
+        #invoiceView.active-fullscreen .main-action-buttons #btnPrepareCapture:hover { background-color: #138496; }
+        
+        /* Estilos para el modo captura */
+        #invoiceView.capture-mode #editInvoiceButton,
+        #invoiceView.capture-mode #btnPrintAction,
+        #invoiceView.capture-mode #btnPdfAction {
+            display: none !important;
+        }
+        
+        body.invoice-fullscreen-mode .header-container { display: none !important; }
+        body.invoice-fullscreen-mode > .container {
+            max-width: 100% !important; padding: 0 !important; margin: 0 !important;
+            box-shadow: none !important; height: 100%;
+        }
+
         @media (max-width: 640px) {
             body { -webkit-text-size-adjust: 100%; }
-            .container { padding: 1rem; margin: 1rem auto; }
+            .container:not(#invoiceView.active-fullscreen) { padding: 1rem; margin: 1rem auto; }
             .header-container { flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
             h1 { font-size: 1.5rem; text-align: center; }
             h2, #listView h2 { font-size: 1.125rem; }
-            .main-action-buttons button:not([class*="btn-save"]):not([class*="btn-delete"]):not([class*="btn-cancel"]):not(.btn-view-action):not(.btn-edit-invoice) { width: 100%; margin-right: 0; margin-bottom: 0.75rem; }
+            .main-action-buttons:not(#invoiceView.active-fullscreen .main-action-buttons) button { width: 100%; margin-right: 0; margin-bottom: 0.75rem; }
             .repair-details-grid { grid-template-columns: 1fr; }
             .repair-details-grid .md\:col-span-2 { grid-column: span 1 / span 1; }
             table th, table td { padding: 0.5rem 0.75rem; }
-            .total { font-size: 1rem; }
+            .total:not(#invoiceView.active-fullscreen .total) { font-size: 1rem; } 
             .modal-content { width: 95%; padding: 1.5rem; max-width: none; }
             .modal-buttons { flex-direction: column; align-items: stretch; }
             .modal-buttons button { width: 100%; margin-bottom: 0.5rem; margin-right: 0; }
             .header-container img { height: 6rem; }
-            #invoiceView .main-action-buttons button { width: 100%; margin-right: 0; margin-bottom: 0.75rem; }
+             #invoiceView.active-fullscreen .main-action-buttons button {
+                 flex-basis: calc(50% - 0.75rem); /* 2 botones por fila en móvil */
+             }
         }
-        /* --- Fin Media Query --- */
-
-        /* Estilos de Impresión */
         @media print {
             body { background-color: white !important; color: #000 !important; }
-            .container, .invoice-view, th, td, .modal-content, input, label, h1, h2, strong, p, span, div { background-color: white !important; color: #000 !important; border-color: #ccc !important; }
+            .container, .invoice-view, th, td, .modal-content, input, label, h1, h2, strong, p, span, div {
+                background-color: white !important; color: #000 !important; border-color: #ccc !important;
+                box-shadow: none !important;
+            }
             h1, h2, strong, .total span { color: #000 !important; }
+            #invoiceView.active-fullscreen {
+                position: static !important; height: auto !important; overflow: visible !important;
+                border: 1px solid #ccc !important; 
+            }
+            #invoiceView.active-fullscreen .invoice-header-container,
+            #invoiceView.active-fullscreen .invoice-meta-info,
+            #invoiceView.active-fullscreen .invoice-content-area,
+            #invoiceView.active-fullscreen .client-info,
+            #invoiceView.active-fullscreen .total-section,
+            #invoiceView.active-fullscreen .invoice-notes,
+            #invoiceView.active-fullscreen footer.invoice-footer-message {
+                 background-color: white !important; 
+            }
+            #invoiceView.active-fullscreen .invoice-content-area { overflow: visible !important; padding: 0.5rem !important; }
+            #invoiceView.active-fullscreen .main-action-buttons { display: none !important; }
+            
             .form-group label, .invoice-view header p, .invoice-view footer p, .invoice-view .client-info p strong { color: #333 !important; }
             .invoice-view footer p { color: #555 !important; }
             th { background-color: #eee !important; color: #333 !important; }
+            #invoiceView.active-fullscreen #invoiceRepairsTable th { background-color: #ddd !important; color: #000 !important;} 
+
             input { background-color: white !important; border-color: #ccc !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            #formView, #listView, .modal, button:not(.print-me), .header-container img, .btn-pdf, .btn-back, .btn-edit-invoice { display: none !important; }
-            #invoiceView { display: block !important; border: none !important; padding: 15px !important; margin: 0 !important; box-shadow: none !important; }
-            #invoiceView header h1 { margin-top: 0 !important; }
-            table { margin-top: 15px; margin-bottom: 15px; box-shadow: none !important; border-radius: 0 !important; overflow: visible !important; }
+            #formView, #listView, .modal, .header-container img:not(#invoiceCompanyLogo), .btn-pdf, .btn-back, .btn-edit-invoice { display: none !important; }
+            #invoiceCompanyLogo { display: block !important; visibility: visible !important; max-height: 60px !important; }
+
+            #invoiceView { display: block !important; padding: 15px !important; margin: 0 auto !important; width: 100% !important; max-width: 700px !important; }
+            table { margin-top: 15px; margin-bottom: 15px; border-radius: 0 !important; overflow: visible !important; }
             th, td { padding: 8px !important; border: 1px solid #ccc !important; }
-            .total { margin-top: 15px !important; font-size: 10pt !important; }
-            .invoice-view header, .invoice-view footer { text-align: center !important; margin-bottom: 15px !important; }
-            .invoice-view header h1 { font-size: 14pt !important; margin-bottom: 5px !important; }
-            .invoice-view header p, .invoice-view footer p { font-size: 8pt !important; margin: 1px 0 !important; }
+            .total-section { margin-top: 15px !important; font-size: 10pt !important; }
             .invoice-view .client-info { margin-bottom: 20px !important; padding-bottom: 10px !important; border-bottom: 1px solid #ccc !important; }
             .invoice-view .client-info p { font-size: 9pt !important; }
-            .invoice-view footer { margin-top: 20px !important; padding-top: 10px !important; border-top: 1px solid #ccc !important; }
         }
     </style>
 </head>
@@ -114,97 +258,142 @@
             <h1 class="text-2xl sm:text-3xl font-bold text-blue-700 text-center sm:text-left">Generador de Facturas</h1>
             <img id="logo-shared" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png"
                  alt="Logo Taller Fernando Retana"
-                 class="h-32 sm:h-48 w-auto mt-2 sm:mt-0" onerror="this.style.display='none'">
+                 class="h-24 sm:h-32 w-auto mt-2 sm:mt-0" onerror="this.onerror=null; this.src='https://placehold.co/200x80/e2e8f0/94a3b8?text=Logo+Empresa';">
         </div>
 
         <div id="formView">
             <div class="text-center mb-6">
-                 <button onclick="showListView()" class="btn btn-list-nav">Ver Facturas Guardadas</button>
+                <button onclick="showListView()" class="btn btn-list-nav">Ver Facturas Guardadas</button>
             </div>
             <div class="form-group mb-4"> <label for="companyName" class="block mb-2 font-semibold text-gray-700">Nombre de la Empresa:</label> <input type="text" id="companyName" value="Taller Fernando Retana" placeholder="Ingrese el nombre de su empresa" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
             <div class="form-group mb-4"> <label for="clientName" class="block mb-2 font-semibold text-gray-700">Nombre del Cliente:</label> <input type="text" id="clientName" placeholder="Ingrese el nombre del cliente" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="saveCurrentState()"> </div>
             <div class="form-group mb-6"> <label for="invoiceDate" class="block mb-2 font-semibold text-gray-700">Fecha:</label> <input type="date" id="invoiceDate" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" oninput="saveCurrentState()"> </div>
             <h2 class="text-xl font-semibold mt-8 mb-4 pb-2 border-b border-gray-300 text-blue-600">Detalle de Reparaciones</h2>
             <div class="repair-details-grid grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                 <div class="form-group sm:col-span-2"> <label for="repairDescription" class="block mb-2 font-semibold text-gray-700">Descripción:</label> <input type="text" id="repairDescription" placeholder="Ingrese la descripción" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
-                 <div class="form-group"> <label for="repairPrice" class="block mb-2 font-semibold text-gray-700">Precio (₡):</label> <input type="number" id="repairPrice" placeholder="0.00" step="0.01" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
+                <div class="form-group sm:col-span-2"> <label for="repairDescription" class="block mb-2 font-semibold text-gray-700">Descripción:</label> <input type="text" id="repairDescription" placeholder="Ingrese la descripción" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
+                <div class="form-group"> <label for="repairPrice" class="block mb-2 font-semibold text-gray-700">Precio (₡):</label> <input type="number" id="repairPrice" placeholder="0.00" step="0.01" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
             </div>
-            <button onclick="addRepair()" class="btn btn-add bg-emerald-600 hover:bg-emerald-700" id="addRepairButton">Agregar Reparación</button>
+            <button onclick="addRepair()" class="btn btn-add" id="addRepairButton">Agregar Reparación</button>
             <div class="overflow-x-auto mt-6 mb-6">
                 <table id="repairsTable" class="w-full rounded-lg shadow overflow-hidden border-collapse min-w-[400px]"> <thead> <tr class="bg-gray-100"> <th class="p-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Descripción</th> <th class="p-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">Precio (₡)</th> </tr> </thead> <tbody class="bg-white divide-y divide-gray-200"> </tbody> </table>
             </div>
             <div class="total text-right mt-6 text-lg font-semibold text-gray-800"> <strong>Total:</strong> <span id="totalAmount" class="ml-4 text-blue-600">₡0.00</span> </div>
-            <div class="main-action-buttons mt-8 text-center space-y-3 sm:space-y-0"> <button onclick="generateAndSaveInvoice()" class="btn btn-generate bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">Generar y Guardar Factura</button> <button onclick="showListView()" class="btn btn-list-nav w-full sm:w-auto">Ver Facturas Guardadas</button> </div>
+            <div class="main-action-buttons mt-8 text-center space-y-3 sm:space-y-0"> <button onclick="generateAndSaveInvoice()" class="btn btn-generate w-full sm:w-auto">Generar y Guardar Factura</button> <button onclick="showListView()" class="btn btn-list-nav w-full sm:w-auto">Ver Facturas Guardadas</button> </div>
         </div>
 
-        <div id="invoiceView" class="invoice-view hidden bg-white border border-gray-200 p-4 sm:p-8 mt-8 rounded-xl">
-             <header class="text-center mb-6 text-gray-700"> <h1 id="invoiceCompanyName" class="text-xl sm:text-2xl font-bold mb-2 text-blue-700"></h1> <p class="text-xs sm:text-sm leading-snug" id="invoiceCompanyPhone"></p> <p class="text-xs sm:text-sm leading-snug" id="invoiceCompanyAddress"></p> </header>
-            <div class="client-info mb-6 pb-4 border-b border-dashed border-gray-300"> <p class="my-1 text-sm sm:text-base text-gray-800"><strong class="text-gray-600 mr-2">Cliente:</strong> <span id="invoiceClientName"></span></p> <p class="my-1 text-sm sm:text-base text-gray-800"><strong class="text-gray-600 mr-2">Fecha:</strong> <span id="invoiceDateDisplay"></span></p> <p class="my-1 text-sm sm:text-base text-gray-800"><strong class="text-gray-600 mr-2">Factura #:</strong> <span id="invoiceIdDisplay"></span></p> </div>
-             <div class="overflow-x-auto mb-6">
-                <table id="invoiceRepairsTable" class="w-full rounded-lg shadow overflow-hidden border-collapse min-w-[400px]"> <thead> <tr class="bg-gray-100"> <th class="p-2 sm:p-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Descripción</th> <th class="p-2 sm:p-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">Precio (₡)</th> </tr> </thead> <tbody class="bg-white divide-y divide-gray-200"> </tbody> </table>
+        <div id="invoiceView" class="invoice-view hidden">
+            <div class="invoice-header-container">
+                <div class="invoice-logo-container">
+                    <img id="invoiceCompanyLogo" src="" alt="Logo Empresa" class="hidden"/>
+                </div>
+                <div class="invoice-company-details">
+                    <h1 id="invoiceCompanyName"></h1>
+                    <p id="invoiceCompanyPhone"></p>
+                    <p id="invoiceCompanyAddress"></p>
+                </div>
             </div>
-            <div class="total text-right mt-6 text-base sm:text-lg font-semibold text-gray-800"> <strong>Total:</strong> <span id="invoiceTotalAmount" class="ml-4 text-blue-600"></span> </div>
-            <footer class="text-center mt-8 pt-4 border-t border-gray-200 text-gray-600"> <p class="text-xs sm:text-sm">Gracias por su preferencia.</p> <p class="text-xs sm:text-sm"><strong id="footerCompanyName" class="text-gray-700"></strong></p> <p class="text-xs sm:text-sm" id="footerCompanyPhone"></p> <p class="text-xs sm:text-sm" id="footerCompanyAddress"></p> </footer>
-             <div class="main-action-buttons mt-8 flex flex-col sm:flex-row justify-center gap-4">
-                 <button id="editInvoiceButton" onclick="editSavedInvoice()" class="btn btn-edit-invoice hidden w-full sm:w-auto">Editar Factura</button>
-                 <button onclick="goBack()" class="btn btn-back bg-red-600 hover:bg-red-700 w-full sm:w-auto">Volver</button>
-                 <button onclick="window.print()" class="btn btn-print bg-gray-500 hover:bg-gray-600 w-full sm:w-auto">Imprimir Factura</button>
-                 <button onclick="downloadPDF()" class="btn btn-pdf w-full sm:w-auto">Descargar PDF</button>
-             </div>
+            <div class="invoice-meta-info">
+                <div>Factura #: <span id="invoiceIdDisplay"></span></div>
+                <div>Fecha: <span id="invoiceDateDisplay"></span></div>
+            </div>
+            
+            <div class="invoice-content-area">
+                <div class="client-info">
+                    <p><strong class="mr-2">Cliente:</strong> <span id="invoiceClientName"></span></p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table id="invoiceRepairsTable" class="w-full">
+                        <thead> <tr> <th>Descripción</th> <th class="text-right">Precio (₡)</th> </tr> </thead>
+                        <tbody> </tbody>
+                    </table>
+                </div>
+
+                <div class="total-section">
+                    <div class="total">
+                        <strong>Total:</strong> <span id="invoiceTotalAmount" class="ml-4"></span>
+                    </div>
+                </div>
+                
+                <div class="invoice-notes">
+                    <strong>Notas Adicionales:</strong>
+                    <p id="additionalNotesText">Este es un espacio para notas o términos y condiciones. Puede ser modificado o llenado dinámicamente si se añade un campo en el formulario.</p>
+                </div>
+            </div>
+
+            <footer class="invoice-footer-message">
+                <p>Gracias por su preferencia.</p>
+                <p id="footerCompanyName" class="hidden"></p>
+                <p id="footerCompanyPhone" class="hidden"></p>
+                <p id="footerCompanyAddress" class="hidden"></p>
+            </footer>
+
+            <div class="main-action-buttons">
+                 <button id="editInvoiceButton" onclick="editSavedInvoice()" class="btn hidden">Editar</button>
+                <button id="btnBackAction" onclick="goBack()" class="btn">Volver</button>
+                <button id="btnPrintAction" onclick="window.print()" class="btn">Imprimir</button>
+                <button id="btnPdfAction" onclick="downloadPDF()" class="btn">PDF</button>
+                <button id="btnPrepareCapture" onclick="prepareForCapture(this)" class="btn">Preparar para Captura</button>
+            </div>
         </div>
 
-         <div id="listView" class="hidden">
-             <h2 class="text-2xl font-bold text-center mb-6 text-blue-700">Facturas Guardadas</h2>
-              <div class="overflow-x-auto mt-6 mb-6">
-                 <table id="savedInvoicesTable" class="w-full rounded-lg shadow overflow-hidden border-collapse min-w-[500px]"> <thead> <tr class="bg-gray-100"> <th class="p-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Fecha</th> <th class="p-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Cliente</th> <th class="p-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">Total</th> </tr> </thead> <tbody class="bg-white divide-y divide-gray-200"> </tbody> </table>
-             </div>
-             <div class="main-action-buttons mt-8 text-center"> <button onclick="goBackToForm()" class="btn btn-back bg-red-600 hover:bg-red-700">Volver al Generador</button> </div>
-         </div>
 
-    </div> <div id="editModal" class="modal bg-black bg-opacity-50">
-        <div class="modal-content bg-white rounded-xl shadow-lg p-6 sm:p-8 w-11/12 max-w-md mx-auto text-gray-900">
+        <div id="listView" class="hidden">
+            <h2 class="text-2xl font-bold text-center mb-6 text-blue-700">Facturas Guardadas</h2>
+            <div class="overflow-x-auto mt-6 mb-6">
+                <table id="savedInvoicesTable" class="w-full rounded-lg shadow overflow-hidden border-collapse min-w-[500px]"> <thead> <tr class="bg-gray-100"> <th class="p-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Fecha</th> <th class="p-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">Cliente</th> <th class="p-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">Total</th> </tr> </thead> <tbody class="bg-white divide-y divide-gray-200"> </tbody> </table>
+            </div>
+            <div class="main-action-buttons mt-8 text-center"> <button onclick="goBackToForm()" class="btn btn-back bg-red-600 hover:bg-red-700">Volver al Generador</button> </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
             <h3 class="text-lg sm:text-xl font-semibold text-center mb-6 text-blue-700">Editar Reparación</h3>
             <div class="form-group mb-4"> <label for="editDescription" class="block mb-2 font-semibold text-gray-700 text-sm sm:text-base">Descripción:</label> <input type="text" id="editDescription" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
             <div class="form-group mb-6"> <label for="editPrice" class="block mb-2 font-semibold text-gray-700 text-sm sm:text-base">Precio (₡):</label> <input type="number" id="editPrice" placeholder="0.00" step="0.01" class="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"> </div>
-            <div class="modal-buttons flex flex-col sm:flex-row justify-end gap-3 mt-6"> <button onclick="saveEdit()" class="btn btn-save-edit bg-blue-600 hover:bg-blue-700">Guardar Cambios</button> <button onclick="triggerDeleteFromEdit()" class="btn btn-delete-from-edit bg-red-600 hover:bg-red-700">Eliminar</button> <button onclick="closeEditModal()" class="btn btn-cancel-edit">Cancelar</button> </div>
+            <div class="modal-buttons flex flex-col sm:flex-row justify-end gap-3 mt-6"> <button onclick="saveEdit()" class="btn btn-save-edit">Guardar Cambios</button> <button onclick="triggerDeleteFromEdit()" class="btn btn-delete-from-edit">Eliminar</button> <button onclick="closeEditModal()" class="btn btn-cancel-edit">Cancelar</button> </div>
         </div>
     </div>
-    <div id="deleteModal" class="modal bg-black bg-opacity-50">
-        <div class="modal-content bg-white rounded-xl shadow-lg p-6 sm:p-8 w-11/12 max-w-md mx-auto text-gray-900">
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
             <p class="text-center mb-6 text-base sm:text-lg font-medium text-gray-800">¿Estás seguro de que deseas eliminar esta reparación?</p>
-            <div class="modal-buttons centered flex flex-col sm:flex-row justify-center gap-4 mt-6"> <button onclick="confirmDeleteRepair()" class="btn btn-delete-confirm bg-red-600 hover:bg-red-700">Sí, eliminar</button> <button onclick="closeDeleteModal()" class="btn btn-delete-cancel">Cancelar</button> </div>
+            <div class="modal-buttons centered flex flex-col sm:flex-row justify-center gap-4 mt-6"> <button onclick="confirmDeleteRepair()" class="btn btn-delete-confirm">Sí, eliminar</button> <button onclick="closeDeleteModal()" class="btn btn-delete-cancel">Cancelar</button> </div>
         </div>
     </div>
-    <div id="savedInvoiceActionModal" class="modal bg-black bg-opacity-50">
-        <div class="modal-content bg-white rounded-xl shadow-lg p-6 sm:p-8 w-11/12 max-w-md mx-auto text-gray-900">
+    <div id="savedInvoiceActionModal" class="modal">
+        <div class="modal-content">
             <h3 class="text-lg sm:text-xl font-semibold text-center mb-6 text-blue-700">Acciones de Factura</h3>
-            <div class="mb-4 space-y-2 text-sm"> <div class="info-item"><span class="info-label text-gray-600">Factura #:</span><span class="info-value text-gray-800" id="actionModalInvoiceId"></span></div> <div class="info-item"><span class="info-label text-gray-600">Cliente:</span><span class="info-value text-gray-800" id="actionModalClientName"></span></div> <div class="info-item"><span class="info-label text-gray-600">Fecha:</span><span class="info-value text-gray-800" id="actionModalDate"></span></div> <div class="info-item"><span class="info-label text-gray-600">Total:</span><span class="info-value text-gray-800" id="actionModalTotal"></span></div> </div>
-            <div class="modal-buttons flex flex-col sm:flex-row justify-end gap-3 mt-6"> <button onclick="triggerViewFromActionModal()" class="btn btn-view-action">Ver Factura</button> <button onclick="triggerDeleteFromActionModal()" class="btn btn-delete-list bg-red-600">Eliminar Factura</button> <button onclick="closeSavedInvoiceActionModal()" class="btn btn-cancel-action">Cancelar</button> </div>
+            <div class="mb-4 space-y-2 text-sm"> <div class="info-item"><span class="info-label font-semibold text-gray-600">Factura #: </span><span class="info-value text-gray-800" id="actionModalInvoiceId"></span></div> <div class="info-item"><span class="info-label font-semibold text-gray-600">Cliente: </span><span class="info-value text-gray-800" id="actionModalClientName"></span></div> <div class="info-item"><span class="info-label font-semibold text-gray-600">Fecha: </span><span class="info-value text-gray-800" id="actionModalDate"></span></div> <div class="info-item"><span class="info-label font-semibold text-gray-600">Total: </span><span class="info-value text-gray-800" id="actionModalTotal"></span></div> </div>
+            <div class="modal-buttons flex flex-col sm:flex-row justify-end gap-3 mt-6"> <button onclick="triggerViewFromActionModal()" class="btn btn-view-action">Ver Factura</button> <button onclick="triggerDeleteFromActionModal()" class="btn btn-delete-list">Eliminar Factura</button> <button onclick="closeSavedInvoiceActionModal()" class="btn btn-cancel-action">Cancelar</button> </div>
         </div>
     </div>
-    <div id="deleteSavedInvoiceModal" class="modal bg-black bg-opacity-50">
-        <div class="modal-content bg-white rounded-xl shadow-lg p-6 sm:p-8 w-11/12 max-w-md mx-auto text-gray-900">
+    <div id="deleteSavedInvoiceModal" class="modal">
+        <div class="modal-content">
             <p class="text-center mb-6 text-base sm:text-lg font-medium text-gray-800">¿Estás seguro de que deseas eliminar esta factura guardada?</p>
-            <div class="modal-buttons centered flex flex-col sm:flex-row justify-center gap-4 mt-6"> <button onclick="confirmDeleteSavedInvoice()" class="btn btn-delete-confirm bg-red-600 hover:bg-red-700">Sí, eliminar factura</button> <button onclick="closeDeleteSavedInvoiceModal()" class="btn btn-delete-cancel">Cancelar</button> </div>
+            <div class="modal-buttons centered flex flex-col sm:flex-row justify-center gap-4 mt-6"> <button onclick="confirmDeleteSavedInvoice()" class="btn btn-delete-confirm">Sí, eliminar factura</button> <button onclick="closeDeleteSavedInvoiceModal()" class="btn btn-delete-cancel">Cancelar</button> </div>
         </div>
     </div>
-
 
     <script>
-        // Asegurarse que jsPDF esté disponible globalmente (umd lo hace)
-        const { jsPDF } = window.jspdf;
+        const { jsPDF } = window.jspdf; 
 
         let currentRepairs = [];
         let rowToEdit = null;
         let invoiceToDeleteId = null;
-        let invoiceToEditId = null;
+        let invoiceToEditId = null; 
         let previousView = 'formView';
 
-        const WORKSHOP_DATA = { name: "Taller Fernando Retana", phone: "8823 9338", address: "San Francisco de Dos Ríos Centro, San José, 10106, Costa Rica", logoUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png" };
-        const CURRENT_INVOICE_STORAGE_KEY = 'currentInvoiceState';
-        const SAVED_INVOICES_STORAGE_KEY = 'savedInvoicesList';
+        const WORKSHOP_DATA = {
+            name: "Taller Fernando Retana",
+            phone: "8823 9338",
+            address: "San Francisco de Dos Ríos Centro, San José, 10106, Costa Rica",
+            logoUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png",
+            logoBase64: "" // <-- PEGA AQUÍ TU CADENA BASE64 COMPLETA (ej: "data:image/png;base64,iVBORw0KGgo...")
+        };
+        const CURRENT_INVOICE_STORAGE_KEY = 'currentInvoiceState_v3_exampleStyle'; 
+        const SAVED_INVOICES_STORAGE_KEY = 'savedInvoicesList_v3_exampleStyle';
 
-        // --- DOM Elements ---
         const companyNameInput = document.getElementById('companyName');
         const clientNameInput = document.getElementById('clientName');
         const invoiceDateInput = document.getElementById('invoiceDate');
@@ -221,29 +410,36 @@
         const formView = document.getElementById('formView');
         const invoiceView = document.getElementById('invoiceView');
         const listView = document.getElementById('listView');
-        const logoElement = document.getElementById('logo-shared');
         const savedInvoicesTableBody = document.querySelector('#savedInvoicesTable tbody');
         const editInvoiceButton = document.getElementById('editInvoiceButton');
+        const invoiceCompanyLogo = document.getElementById('invoiceCompanyLogo');
+        const additionalNotesText = document.getElementById('additionalNotesText'); 
 
-
-        // --- Funciones de Utilidad ---
-        function formatCurrency(amount) { const num = Number(amount); return isNaN(num) ? '₡0.00' : num.toLocaleString('es-CR', { style: 'currency', currency: 'CRC' }); }
+        function formatCurrency(amount) { const num = Number(amount); return isNaN(num) ? '₡0.00' : num.toLocaleString('es-CR', { style: 'currency', currency: 'CRC', minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
         function calculateTotal() { return currentRepairs.reduce((sum, repair) => sum + repair.price, 0); }
         function updateTotalDisplay() { totalAmountSpan.textContent = formatCurrency(calculateTotal()); }
         function generateInvoiceId() { return `FACT-${Date.now()}`; }
-        function formatDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00'); return isNaN(dateObj.getTime()) ? dateString : dateObj.toLocaleDateString('es-CR'); } catch { return dateString; } }
-        function formatFullDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00'); return isNaN(dateObj.getTime()) ? dateString : dateObj.toLocaleDateString('es-CR', { year: 'numeric', month: 'long', day: 'numeric' }); } catch { return dateString; } }
+        function formatDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00Z'); return isNaN(dateObj.getTime()) ? dateString : dateObj.toLocaleDateString('es-CR'); } catch { return dateString; } }
+        function formatFullDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00Z'); return isNaN(dateObj.getTime()) ? dateString : dateObj.toLocaleDateString('es-CR', { year: 'numeric', month: 'long', day: 'numeric' }); } catch { return dateString; } }
 
-        // --- Persistencia ---
         function saveCurrentState() { localStorage.setItem(CURRENT_INVOICE_STORAGE_KEY, JSON.stringify({ clientName: clientNameInput.value, invoiceDate: invoiceDateInput.value, repairs: currentRepairs })); }
-        function loadCurrentState() { const s = localStorage.getItem(CURRENT_INVOICE_STORAGE_KEY); if (s) { try { const state = JSON.parse(s); clientNameInput.value = state.clientName || ''; invoiceDateInput.value = state.invoiceDate || new Date().toISOString().split('T')[0]; currentRepairs = state.repairs || []; renderRepairsTable(); } catch (e) { console.error(e); currentRepairs = []; localStorage.removeItem(CURRENT_INVOICE_STORAGE_KEY); } } else { invoiceDateInput.value = new Date().toISOString().split('T')[0]; } }
-        function getSavedInvoices() { const s = localStorage.getItem(SAVED_INVOICES_STORAGE_KEY); if (s) { try { return JSON.parse(s).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); } catch (e) { console.error(e); return []; } } return []; }
+        function loadCurrentState() { const s = localStorage.getItem(CURRENT_INVOICE_STORAGE_KEY); if (s) { try { const state = JSON.parse(s); clientNameInput.value = state.clientName || ''; invoiceDateInput.value = state.invoiceDate || new Date().toISOString().split('T')[0]; currentRepairs = state.repairs || []; renderRepairsTable(); } catch (e) { console.error("Error cargando estado:", e); currentRepairs = []; localStorage.removeItem(CURRENT_INVOICE_STORAGE_KEY); } } else { invoiceDateInput.value = new Date().toISOString().split('T')[0]; } }
+        function getSavedInvoices() { const s = localStorage.getItem(SAVED_INVOICES_STORAGE_KEY); if (s) { try { return JSON.parse(s).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); } catch (e) { console.error("Error obteniendo facturas:", e); return []; } } return []; }
         function saveInvoices(invoices) { localStorage.setItem(SAVED_INVOICES_STORAGE_KEY, JSON.stringify(invoices)); }
-        function saveInvoiceToList(invoiceData) { const list = getSavedInvoices(); list.push(invoiceData); saveInvoices(list); }
+        function saveInvoiceToList(invoiceData) { const list = getSavedInvoices(); list.unshift(invoiceData); saveInvoices(list); } 
         function deleteInvoiceFromList(invoiceId) { let list = getSavedInvoices(); list = list.filter(inv => inv.id !== invoiceId); saveInvoices(list); renderInvoiceList(); }
         function clearCurrentState() { clientNameInput.value = ''; invoiceDateInput.value = new Date().toISOString().split('T')[0]; currentRepairs = []; renderRepairsTable(); localStorage.removeItem(CURRENT_INVOICE_STORAGE_KEY); }
+        function updateInvoiceInList(updatedInvoiceData) {
+            let invoices = getSavedInvoices();
+            const index = invoices.findIndex(inv => inv.id === updatedInvoiceData.id);
+            if (index !== -1) {
+                invoices[index] = { ...invoices[index], ...updatedInvoiceData, updatedAt: new Date().toISOString() }; 
+                saveInvoices(invoices);
+                return true;
+            }
+            return false;
+        }
 
-        // --- Renderizado de Tablas ---
         function renderRepairsTable() {
             repairsTableBody.innerHTML = '';
             currentRepairs.forEach((repair, index) => {
@@ -253,7 +449,7 @@
                 row.onclick = () => openEditModal(row, index);
                 const cell1 = row.insertCell(0); const cell2 = row.insertCell(1);
                 cell1.textContent = repair.description; cell2.textContent = formatCurrency(repair.price);
-                cell1.classList.add('p-3'); cell2.classList.add('p-3', 'text-right');
+                cell1.classList.add('p-3', 'align-middle'); cell2.classList.add('p-3', 'text-right', 'align-middle');
                 row.dataset.index = index;
             });
             updateTotalDisplay();
@@ -271,145 +467,397 @@
                 cellClient.textContent = invoice.clientName;
                 cellTotal.textContent = formatCurrency(invoice.total);
                 cellDate.classList.add('p-3'); cellClient.classList.add('p-3'); cellTotal.classList.add('p-3', 'text-right');
-                 if (savedInvoicesTableBody.rows.length > 1) {
-                     row.classList.add('border-t', 'border-gray-200');
-                 }
             });
         }
 
-        // --- Lógica de Reparaciones (Formulario) ---
-        function addRepair() { const d = repairDescriptionInput.value.trim(); const p = parseFloat(repairPriceInput.value); if (d && !isNaN(p) && p > 0) { currentRepairs.push({ description: d, price: p }); renderRepairsTable(); saveCurrentState(); repairDescriptionInput.value = ''; repairPriceInput.value = ''; repairDescriptionInput.focus(); } else { alert('Ingrese descripción y precio válido.'); } }
+        function addRepair() { const d = repairDescriptionInput.value.trim(); const p = parseFloat(repairPriceInput.value); if (d && !isNaN(p) && p >= 0) { currentRepairs.push({ description: d, price: p }); renderRepairsTable(); saveCurrentState(); repairDescriptionInput.value = ''; repairPriceInput.value = ''; repairDescriptionInput.focus(); } else { alert('Por favor, ingrese una descripción y un precio válido (puede ser 0).'); } }
 
-        // --- Lógica de Edición/Eliminación Reparación (Modal) ---
-        function openEditModal(row, index) { rowToEdit = row; const d = currentRepairs[index]; if (!d) return; editDescriptionInput.value = d.description; editPriceInput.value = d.price.toFixed(2); editModal.dataset.editingIndex = index; editModal.style.display = 'flex'; editDescriptionInput.focus(); }
+        function openEditModal(row, index) { rowToEdit = row; const repair = currentRepairs[index]; if (!repair) return; editDescriptionInput.value = repair.description; editPriceInput.value = repair.price.toFixed(2); editModal.dataset.editingIndex = index; editModal.style.display = 'flex'; editDescriptionInput.focus(); }
         function closeEditModal() { editModal.style.display = 'none'; rowToEdit = null; delete editModal.dataset.editingIndex; }
-        function saveEdit() { const i = parseInt(editModal.dataset.editingIndex, 10); if (isNaN(i) || i < 0 || i >= currentRepairs.length) return closeEditModal(); const d = editDescriptionInput.value.trim(); const p = parseFloat(editPriceInput.value); if (d && !isNaN(p) && p > 0) { currentRepairs[i] = { description: d, price: p }; renderRepairsTable(); saveCurrentState(); closeEditModal(); } else { alert('Ingrese descripción y precio válido.'); } }
+        function saveEdit() { const i = parseInt(editModal.dataset.editingIndex, 10); if (isNaN(i) || i < 0 || i >= currentRepairs.length) return closeEditModal(); const d = editDescriptionInput.value.trim(); const p = parseFloat(editPriceInput.value); if (d && !isNaN(p) && p >= 0) { currentRepairs[i] = { description: d, price: p }; renderRepairsTable(); saveCurrentState(); closeEditModal(); } else { alert('Por favor, ingrese una descripción y un precio válido (puede ser 0).'); } }
         function triggerDeleteFromEdit() { const i = parseInt(editModal.dataset.editingIndex, 10); if (isNaN(i) || i < 0 || i >= currentRepairs.length) return closeEditModal(); closeEditModal(); openDeleteModal(i); }
         function openDeleteModal(index) { deleteModal.dataset.deletingIndex = index; deleteModal.style.display = 'flex'; }
         function closeDeleteModal() { deleteModal.style.display = 'none'; delete deleteModal.dataset.deletingIndex; }
         function confirmDeleteRepair() { const i = parseInt(deleteModal.dataset.deletingIndex, 10); if (!isNaN(i) && i >= 0 && i < currentRepairs.length) { currentRepairs.splice(i, 1); renderRepairsTable(); saveCurrentState(); } closeDeleteModal(); }
 
-        // --- Lógica Modal Acciones Factura Guardada ---
-        function openSavedInvoiceActionModal(invoiceId) {
-            const invoice = getSavedInvoices().find(inv => inv.id === invoiceId);
-            if (!invoice) return alert("Factura no encontrada.");
-            document.getElementById('actionModalInvoiceId').textContent = invoice.id;
-            document.getElementById('actionModalClientName').textContent = invoice.clientName;
-            document.getElementById('actionModalDate').textContent = formatDate(invoice.invoiceDate);
-            document.getElementById('actionModalTotal').textContent = formatCurrency(invoice.total);
-            savedInvoiceActionModal.dataset.invoiceId = invoiceId;
-            savedInvoiceActionModal.style.display = 'flex';
-        }
+        function openSavedInvoiceActionModal(invoiceId) { const invoice = getSavedInvoices().find(inv => inv.id === invoiceId); if (!invoice) return alert("Factura no encontrada."); document.getElementById('actionModalInvoiceId').textContent = invoice.id; document.getElementById('actionModalClientName').textContent = invoice.clientName; document.getElementById('actionModalDate').textContent = formatDate(invoice.invoiceDate); document.getElementById('actionModalTotal').textContent = formatCurrency(invoice.total); savedInvoiceActionModal.dataset.invoiceId = invoiceId; savedInvoiceActionModal.style.display = 'flex'; }
         function closeSavedInvoiceActionModal() { savedInvoiceActionModal.style.display = 'none'; delete savedInvoiceActionModal.dataset.invoiceId; }
         function triggerViewFromActionModal() { const id = savedInvoiceActionModal.dataset.invoiceId; if (id) viewSavedInvoice(id); closeSavedInvoiceActionModal(); }
         function triggerDeleteFromActionModal() { const id = savedInvoiceActionModal.dataset.invoiceId; if (id) openDeleteSavedInvoiceModal(id); closeSavedInvoiceActionModal(); }
 
-        // --- Lógica para borrar Facturas Guardadas (Confirmación) ---
         function openDeleteSavedInvoiceModal(invoiceId) { invoiceToDeleteId = invoiceId; deleteSavedInvoiceModal.style.display = 'flex'; }
         function closeDeleteSavedInvoiceModal() { deleteSavedInvoiceModal.style.display = 'none'; invoiceToDeleteId = null; }
         function confirmDeleteSavedInvoice() { if (invoiceToDeleteId) deleteInvoiceFromList(invoiceToDeleteId); closeDeleteSavedInvoiceModal(); }
 
-        // --- Lógica de Navegación y Visualización ---
         function populateInvoiceView(invoiceData) {
-            document.getElementById('invoiceCompanyName').textContent = invoiceData.company.name; document.getElementById('invoiceCompanyPhone').textContent = `Teléfono: ${invoiceData.company.phone}`; document.getElementById('invoiceCompanyAddress').textContent = invoiceData.company.address; document.getElementById('footerCompanyName').textContent = invoiceData.company.name; document.getElementById('footerCompanyPhone').textContent = `Teléfono: ${invoiceData.company.phone}`; document.getElementById('footerCompanyAddress').textContent = invoiceData.company.address; document.getElementById('invoiceClientName').textContent = invoiceData.clientName; document.getElementById('invoiceIdDisplay').textContent = invoiceData.id; document.getElementById('invoiceDateDisplay').textContent = formatFullDate(invoiceData.invoiceDate);
+            if (invoiceData.company.logoBase64 && invoiceData.company.logoBase64.startsWith('data:image')) {
+                invoiceCompanyLogo.src = invoiceData.company.logoBase64;
+                invoiceCompanyLogo.onerror = null; 
+            } else if (invoiceData.company.logoUrl) {
+                invoiceCompanyLogo.src = invoiceData.company.logoUrl;
+                invoiceCompanyLogo.onerror = () => { 
+                    invoiceCompanyLogo.onerror = null; 
+                    invoiceCompanyLogo.src='https://placehold.co/120x70/e2e8f0/94a3b8?text=Logo'; 
+                };
+            } else { 
+                invoiceCompanyLogo.src='https://placehold.co/120x70/e2e8f0/94a3b8?text=Logo';
+                invoiceCompanyLogo.onerror = null;
+            }
+            invoiceCompanyLogo.classList.remove('hidden');
+
+            document.getElementById('invoiceCompanyName').textContent = invoiceData.company.name;
+            document.getElementById('invoiceCompanyPhone').textContent = `Tel: ${invoiceData.company.phone}`;
+            document.getElementById('invoiceCompanyAddress').textContent = invoiceData.company.address;
+            
+            document.getElementById('invoiceIdDisplay').textContent = invoiceData.id;
+            document.getElementById('invoiceDateDisplay').textContent = formatFullDate(invoiceData.invoiceDate);
+            document.getElementById('invoiceClientName').textContent = invoiceData.clientName;
+            
             const tableBody = document.querySelector('#invoiceRepairsTable tbody'); tableBody.innerHTML = '';
-            invoiceData.repairs.forEach((repair, i) => { const r = tableBody.insertRow(); r.classList.add('border-b', 'border-gray-200'); if (i === invoiceData.repairs.length - 1) r.classList.remove('border-b', 'border-gray-200'); const c1 = r.insertCell(0); const c2 = r.insertCell(1); c1.textContent = repair.description; c2.textContent = formatCurrency(repair.price); c1.classList.add('p-3'); c2.classList.add('p-3', 'text-right'); });
+            invoiceData.repairs.forEach((repair, i) => { const r = tableBody.insertRow(); const c1 = r.insertCell(0); const c2 = r.insertCell(1); c1.textContent = repair.description; c2.textContent = formatCurrency(repair.price); c1.classList.add('p-3', 'align-middle'); c2.classList.add('p-3', 'text-right', 'align-middle'); if (i < invoiceData.repairs.length -1) {r.classList.add('border-b', 'border-gray-200')} });
+            
             document.getElementById('invoiceTotalAmount').textContent = formatCurrency(invoiceData.total);
+            
+            const footerCompanyName = document.getElementById('footerCompanyName');
+            const footerCompanyPhone = document.getElementById('footerCompanyPhone');
+            const footerCompanyAddress = document.getElementById('footerCompanyAddress');
+            if (footerCompanyName) footerCompanyName.textContent = invoiceData.company.name;
+            if (footerCompanyPhone) footerCompanyPhone.textContent = `Tel: ${invoiceData.company.phone}`;
+            if (footerCompanyAddress) footerCompanyAddress.textContent = invoiceData.company.address;
+
             invoiceView.dataset.currentInvoiceId = invoiceData.id;
         }
+
+        function showView(viewToShow) {
+            formView.style.display = 'none';
+            invoiceView.style.display = 'none';
+            listView.style.display = 'none';
+            invoiceView.classList.remove('active-fullscreen');
+            invoiceView.classList.remove('capture-mode'); // Salir del modo captura al cambiar de vista
+            document.body.classList.remove('invoice-fullscreen-mode');
+            
+            // Resetear botón de captura si existe y estamos saliendo de invoiceView
+            const btnCapture = document.getElementById('btnPrepareCapture');
+            if (btnCapture && viewToShow !== 'invoiceView') {
+                 btnCapture.textContent = "Preparar para Captura";
+                 btnCapture.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+                 btnCapture.classList.add('bg-teal-500', 'hover:bg-teal-600'); // Color original del botón de captura
+            }
+
+
+            if (viewToShow === 'invoiceView') {
+                invoiceView.style.display = 'flex'; 
+                invoiceView.classList.add('active-fullscreen');
+                document.body.classList.add('invoice-fullscreen-mode');
+            } else if (viewToShow === 'formView') {
+                formView.style.display = 'block';
+            } else if (viewToShow === 'listView') {
+                listView.style.display = 'block';
+            }
+        }
+        
         function generateAndSaveInvoice() {
-            const companyName = companyNameInput.value.trim(); const clientName = clientNameInput.value.trim(); const invoiceDate = invoiceDateInput.value; let errors = []; if (!clientName) errors.push("Cliente"); if (!invoiceDate) errors.push("Fecha"); if (currentRepairs.length === 0) errors.push("Reparaciones"); if (errors.length > 0) return alert(`Faltan: ${errors.join(', ')}.`);
-            const invoiceId = generateInvoiceId(); const total = calculateTotal(); const invoiceData = { id: invoiceId, company: { name: companyName, phone: WORKSHOP_DATA.phone, address: WORKSHOP_DATA.address, logoUrl: WORKSHOP_DATA.logoUrl }, clientName, invoiceDate, repairs: [...currentRepairs], total, createdAt: new Date().toISOString() };
-            saveInvoiceToList(invoiceData); populateInvoiceView(invoiceData); previousView = 'formView';
-            editInvoiceButton.classList.add('hidden');
-            formView.style.display = 'none'; listView.style.display = 'none'; invoiceView.style.display = 'block'; logoElement.parentElement.style.display = 'flex'; clearCurrentState();
+            const companyName = companyNameInput.value.trim() || WORKSHOP_DATA.name; 
+            const clientName = clientNameInput.value.trim();
+            const invoiceDate = invoiceDateInput.value;
+            let errors = [];
+            if (!clientName) errors.push("Nombre del Cliente");
+            if (!invoiceDate) errors.push("Fecha de Factura");
+            if (currentRepairs.length === 0) errors.push("Al menos una reparación/servicio");
+            if (errors.length > 0) return alert(`Por favor, complete los siguientes campos: ${errors.join(', ')}.`);
+
+            const invoiceId = invoiceToEditId || generateInvoiceId(); 
+            const total = calculateTotal();
+            const invoiceData = {
+                id: invoiceId,
+                company: { 
+                    name: companyName, 
+                    phone: WORKSHOP_DATA.phone, 
+                    address: WORKSHOP_DATA.address, 
+                    logoUrl: WORKSHOP_DATA.logoUrl,
+                    logoBase64: WORKSHOP_DATA.logoBase64 
+                },
+                clientName, invoiceDate, repairs: [...currentRepairs], total,
+                createdAt: invoiceToEditId ? getSavedInvoices().find(inv => inv.id === invoiceToEditId)?.createdAt || new Date().toISOString() : new Date().toISOString(),
+            };
+
+            if (invoiceToEditId) { 
+                updateInvoiceInList(invoiceData);
+                invoiceToEditId = null; 
+            } else {
+                saveInvoiceToList(invoiceData);
+            }
+            
+            populateInvoiceView(invoiceData);
+            previousView = 'formView'; 
+            editInvoiceButton.classList.add('hidden'); 
+            showView('invoiceView');
+            clearCurrentState(); 
         }
+
         function viewSavedInvoice(invoiceId) {
-            const savedInvoices = getSavedInvoices(); const invoiceData = savedInvoices.find(inv => inv.id === invoiceId);
-            if (invoiceData) { populateInvoiceView(invoiceData); previousView = 'listView'; editInvoiceButton.classList.remove('hidden');
-                formView.style.display = 'none'; listView.style.display = 'none'; invoiceView.style.display = 'block'; logoElement.parentElement.style.display = 'flex'; } else { alert("Factura no encontrada."); }
-        }
-        function showListView() { renderInvoiceList(); formView.style.display = 'none'; invoiceView.style.display = 'none'; listView.style.display = 'block'; logoElement.parentElement.style.display = 'flex'; }
-        function goBack() { invoiceView.style.display = 'none'; editInvoiceButton.classList.add('hidden');
-            if (previousView === 'listView') showListView(); else goBackToForm(); }
-        function goBackToForm() { invoiceView.style.display = 'none'; listView.style.display = 'none'; formView.style.display = 'block'; logoElement.parentElement.style.display = 'flex'; editInvoiceButton.classList.add('hidden'); }
+            const savedInvoices = getSavedInvoices();
+            const invoiceData = savedInvoices.find(inv => inv.id === invoiceId);
+            if (invoiceData) {
+                const companyDataForView = {
+                    ...invoiceData.company, 
+                    logoBase64: WORKSHOP_DATA.logoBase64, 
+                    logoUrl: WORKSHOP_DATA.logoUrl 
+                };
+                const invoiceDataForView = {...invoiceData, company: companyDataForView};
 
-        // --- Lógica para Editar Factura Guardada ---
+                populateInvoiceView(invoiceDataForView);
+                previousView = 'listView';
+                editInvoiceButton.classList.remove('hidden'); 
+                showView('invoiceView');
+            } else {
+                alert("Factura no encontrada.");
+            }
+        }
+
+        function showListView() { renderInvoiceList(); showView('listView'); }
+        
+        function goBack() {
+            // Salir del modo captura si está activo
+            if (invoiceView.classList.contains('capture-mode')) {
+                invoiceView.classList.remove('capture-mode');
+                const btnCapture = document.getElementById('btnPrepareCapture');
+                if (btnCapture) {
+                    btnCapture.textContent = "Preparar para Captura";
+                    btnCapture.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+                    btnCapture.classList.add('bg-teal-500', 'hover:bg-teal-600'); // Color original
+                }
+            }
+            editInvoiceButton.classList.add('hidden'); 
+            if (previousView === 'listView') {
+                showListView();
+            } else {
+                goBackToForm();
+            }
+        }
+        function goBackToForm() { 
+            // Asegurarse de salir del modo captura también al ir directo al formulario
+             if (invoiceView.classList.contains('capture-mode')) {
+                invoiceView.classList.remove('capture-mode');
+                 const btnCapture = document.getElementById('btnPrepareCapture');
+                if (btnCapture) {
+                    btnCapture.textContent = "Preparar para Captura";
+                    btnCapture.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+                    btnCapture.classList.add('bg-teal-500', 'hover:bg-teal-600');
+                }
+            }
+            editInvoiceButton.classList.add('hidden'); 
+            showView('formView'); 
+        }
+
         function editSavedInvoice() {
-             const invoiceId = invoiceView.dataset.currentInvoiceId;
-             if (!invoiceId) return alert("No se puede identificar la factura a editar.");
-             const savedInvoices = getSavedInvoices();
-             const invoiceData = savedInvoices.find(inv => inv.id === invoiceId);
-             if (!invoiceData) return alert("Factura guardada no encontrada para editar.");
-             clientNameInput.value = invoiceData.clientName;
-             invoiceDateInput.value = invoiceData.invoiceDate;
-             currentRepairs = [...invoiceData.repairs];
-             renderRepairsTable();
-             saveCurrentState();
-             goBackToForm();
-             alert("Datos de la factura cargados para edición. Realice los cambios y genere una nueva factura.");
+            const invoiceId = invoiceView.dataset.currentInvoiceId;
+            if (!invoiceId) return alert("No se puede identificar la factura a editar.");
+            const invoiceData = getSavedInvoices().find(inv => inv.id === invoiceId);
+            if (!invoiceData) return alert("Factura guardada no encontrada para editar.");
+
+            companyNameInput.value = invoiceData.company.name; 
+            clientNameInput.value = invoiceData.clientName;
+            invoiceDateInput.value = invoiceData.invoiceDate;
+            currentRepairs = [...invoiceData.repairs]; 
+            
+            invoiceToEditId = invoiceData.id; 
+
+            renderRepairsTable(); 
+            updateTotalDisplay(); 
+            
+            showView('formView'); 
+            alert("Datos de la factura cargados para edición. Realice los cambios y luego 'Genere y Guarde Factura' para actualizarla.");
+        }
+        
+        // Función para alternar el modo captura de pantalla
+        function prepareForCapture(buttonElement) {
+            const invoiceV = document.getElementById('invoiceView'); // Renombrado para evitar conflicto con variable global
+            const editBtn = document.getElementById('editInvoiceButton');
+
+            if (invoiceV.classList.contains('capture-mode')) {
+                // Salir del modo captura
+                invoiceV.classList.remove('capture-mode');
+                buttonElement.textContent = "Preparar para Captura";
+                buttonElement.classList.replace('bg-yellow-500', 'bg-teal-500'); // Color original del botón de captura
+                buttonElement.classList.replace('hover:bg-yellow-600', 'hover:bg-teal-600');
+
+                // Restaurar visibilidad del botón de editar según la lógica original
+                const currentInvoiceId = invoiceV.dataset.currentInvoiceId;
+                if (previousView === 'listView' && currentInvoiceId && editBtn) { // Verificar que editBtn exista
+                    editBtn.classList.remove('hidden');
+                } else if (editBtn) {
+                    editBtn.classList.add('hidden');
+                }
+                // Los otros botones (Imprimir, PDF) se mostrarán por CSS al quitar 'capture-mode'
+            } else {
+                // Entrar en modo captura
+                invoiceV.classList.add('capture-mode');
+                buttonElement.textContent = "Restaurar Botones";
+                buttonElement.classList.replace('bg-teal-500', 'bg-yellow-500'); // Color indicativo del modo captura
+                buttonElement.classList.replace('hover:bg-teal-600', 'hover:bg-yellow-600');
+                // CSS se encarga de ocultar #editInvoiceButton, #btnPrintAction, #btnPdfAction
+            }
         }
 
-         // --- Función para Descargar PDF ---
-         function downloadPDF() {
+
+        function downloadPDF() {
             const invoiceElement = document.getElementById('invoiceView');
             const invoiceId = document.getElementById('invoiceIdDisplay').textContent || 'factura';
             const clientName = document.getElementById('invoiceClientName').textContent || 'cliente';
-            const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
             const filename = `Factura-${clientName.replace(/\s+/g, '_')}-${invoiceId}.pdf`;
 
-            // Ocultar botones temporalmente para la captura
-            const buttonsToHide = invoiceElement.querySelectorAll('.main-action-buttons');
-            buttonsToHide.forEach(btnDiv => btnDiv.style.visibility = 'hidden');
-             // Ocultar logo temporalmente si está dentro de invoiceView (ajustar si es necesario)
-            const logoInInvoice = invoiceElement.querySelector('#logo-shared'); // Asumiendo que el logo está dentro
-            if (logoInInvoice) logoInInvoice.style.visibility = 'hidden';
+            // Temporalmente quitar el modo captura si está activo para asegurar que todos los elementos se capturen
+            const isInCaptureMode = invoiceElement.classList.contains('capture-mode');
+            if (isInCaptureMode) {
+                invoiceElement.classList.remove('capture-mode');
+            }
+
+            const buttonsContainer = invoiceElement.querySelector('.main-action-buttons');
+            const originalButtonsDisplay = buttonsContainer.style.display;
+            buttonsContainer.style.display = 'none'; 
+
+            window.setTimeout(() => {
+                html2canvas(invoiceElement, {
+                    scale: 2, 
+                    useCORS: true, 
+                    logging: false,
+                    imageTimeout: 15000, 
+                    onclone: (documentClone) => {
+                        const clonedInvoiceView = documentClone.getElementById('invoiceView');
+                        if (clonedInvoiceView) {
+                            clonedInvoiceView.style.display = 'flex'; 
+                            clonedInvoiceView.style.flexDirection = 'column'; 
+                            clonedInvoiceView.style.position = 'relative'; 
+                            clonedInvoiceView.style.width = '210mm'; 
+                            clonedInvoiceView.style.height = 'auto'; 
+                            clonedInvoiceView.style.margin = '0';
+                            clonedInvoiceView.style.padding = '10mm'; 
+                            clonedInvoiceView.style.boxSizing = 'border-box';
+                            clonedInvoiceView.style.border = 'none';
+                            clonedInvoiceView.style.boxShadow = 'none';
+                            clonedInvoiceView.style.backgroundColor = '#ffffff'; 
+                            
+                            const clonedContentArea = clonedInvoiceView.querySelector('.invoice-content-area');
+                            if(clonedContentArea) {
+                                clonedContentArea.style.overflowY = 'visible'; 
+                                clonedContentArea.style.height = 'auto';
+                            }
+                            const clonedButtons = clonedInvoiceView.querySelector('.main-action-buttons');
+                            if (clonedButtons) clonedButtons.style.display = 'none'; 
+                            
+                            const sectionsToEnsureWhiteBg = [
+                                '.invoice-header-container', 
+                                '.invoice-meta-info', 
+                                '.client-info', 
+                                '.invoice-notes',
+                                'footer.invoice-footer-message'
+                            ];
+                            sectionsToEnsureWhiteBg.forEach(selector => {
+                                const elem = clonedInvoiceView.querySelector(selector);
+                                if (elem) elem.style.backgroundColor = '#ffffff';
+                            });
+
+                            const clonedLogoContainer = clonedInvoiceView.querySelector('.invoice-logo-container');
+                            if (clonedLogoContainer) {
+                                clonedLogoContainer.style.display = 'block'; 
+                                clonedLogoContainer.style.visibility = 'visible';
+                            }
+                            const clonedLogo = clonedInvoiceView.querySelector('#invoiceCompanyLogo');
+                            if (clonedLogo) {
+                                clonedLogo.style.display = 'block'; 
+                                clonedLogo.style.visibility = 'visible';
+                            }
+                        }
+                    }
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+                    const pdfWidth = pdf.internal.pageSize.getWidth();
+                    const pdfHeight = pdf.internal.pageSize.getHeight();
+                    const canvasScaledWidth = canvas.width / 2; 
+                    const canvasScaledHeight = canvas.height / 2;
+                    
+                    const ratio = Math.min(pdfWidth / canvasScaledWidth, pdfHeight / canvasScaledHeight);
+                    const imgActualWidth = canvasScaledWidth * ratio;
+                    const imgActualHeight = canvasScaledHeight * ratio;
+                    
+                    const xOffset = (pdfWidth - imgActualWidth) / 2;
+                    
+                    let position = 0; 
+                    let heightLeft = imgActualHeight;
+
+                    if (imgActualHeight <= pdfHeight) { // Si cabe en una página
+                         position = (pdfHeight - imgActualHeight) / 2; // Centrar verticalmente si cabe
+                         if (position < 0) position = 0; // Asegurar que no sea negativo
+                         pdf.addImage(imgData, 'PNG', xOffset, position, imgActualWidth, imgActualHeight);
+                    } else { // Si necesita múltiples páginas
+                        const pageCanvasHeight = (pdfHeight / imgActualHeight) * canvas.height; // Altura del canvas a copiar por página
+                        let srcY = 0; // Coordenada Y de origen en el canvas
+
+                        while(srcY < canvas.height) {
+                            const remainingCanvasHeight = canvas.height - srcY;
+                            const currentChunkCanvasHeight = Math.min(pageCanvasHeight, remainingCanvasHeight);
+                            
+                            const tempCanvas = document.createElement('canvas');
+                            tempCanvas.width = canvas.width;
+                            tempCanvas.height = currentChunkCanvasHeight;
+                            const tempCtx = tempCanvas.getContext('2d');
+                            tempCtx.drawImage(canvas, 0, srcY, canvas.width, currentChunkCanvasHeight, 0, 0, canvas.width, currentChunkCanvasHeight);
+                            const chunkImgData = tempCanvas.toDataURL('image/png');
+
+                            const chunkImageActualHeight = (currentChunkCanvasHeight / 2) * ratio;
 
 
-            html2canvas(invoiceElement, {
-                scale: 2, // Aumentar escala para mejor resolución
-                useCORS: true, // Para cargar imágenes externas si las hubiera (como el logo)
-                logging: false // Desactivar logs de html2canvas en consola
-             }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF({
-                    orientation: 'p', // portrait
-                    unit: 'pt', // points
-                    format: 'a4' // tamaño A4
+                            if (srcY > 0) { 
+                                pdf.addPage();
+                            }
+                            pdf.addImage(chunkImgData, 'PNG', xOffset, 0, imgActualWidth, chunkImageActualHeight ); 
+                            srcY += currentChunkCanvasHeight;
+                            heightLeft -= pdfHeight; // Aproximación
+                        }
+                    }
+                    
+                    pdf.save(filename);
+                    buttonsContainer.style.display = originalButtonsDisplay; 
+                    // Restaurar modo captura si estaba activo
+                    if (isInCaptureMode) {
+                        invoiceElement.classList.add('capture-mode');
+                    }
+                }).catch(err => {
+                    console.error("Error al generar PDF:", err);
+                    buttonsContainer.style.display = originalButtonsDisplay;
+                     if (isInCaptureMode) {
+                        invoiceElement.classList.add('capture-mode');
+                    }
+                    alert("Hubo un error al generar el PDF. Revise la consola para más detalles.");
                 });
-
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
-                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-                const imgX = (pdfWidth - imgWidth * ratio) / 2;
-                const imgY = 10; // Margen superior pequeño
-
-                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save(filename);
-
-                 // Volver a mostrar botones y logo
-                 buttonsToHide.forEach(btnDiv => btnDiv.style.visibility = 'visible');
-                 if (logoInInvoice) logoInInvoice.style.visibility = 'visible';
-
-
-            }).catch(error => {
-                 console.error("Error al generar el PDF:", error);
-                 alert("Hubo un error al generar el PDF. Revise la consola para más detalles.");
-                 // Asegurarse de volver a mostrar botones y logo incluso si hay error
-                 buttonsToHide.forEach(btnDiv => btnDiv.style.visibility = 'visible');
-                 if (logoInInvoice) logoInInvoice.style.visibility = 'visible';
-
-            });
+            }, 250); 
         }
 
-
-        // --- Inicialización ---
         document.addEventListener('DOMContentLoaded', () => {
-             companyNameInput.value = WORKSHOP_DATA.name; logoElement.src = WORKSHOP_DATA.logoUrl; loadCurrentState();
-             clientNameInput.addEventListener('input', saveCurrentState); invoiceDateInput.addEventListener('change', saveCurrentState);
-             if (formView.style.display !== 'none') { logoElement.parentElement.style.display = 'flex'; } else { logoElement.parentElement.style.display = 'none'; }
+            companyNameInput.value = WORKSHOP_DATA.name; 
+            loadCurrentState(); 
+            renderRepairsTable(); 
+        });
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                if (editModal.style.display === 'flex') closeEditModal();
+                if (deleteModal.style.display === 'flex') closeDeleteModal();
+                if (savedInvoiceActionModal.style.display === 'flex') closeSavedInvoiceActionModal();
+                if (deleteSavedInvoiceModal.style.display === 'flex') closeDeleteSavedInvoiceModal();
+            }
+        });
+        [editModal, deleteModal, savedInvoiceActionModal, deleteSavedInvoiceModal].forEach(modal => {
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) { 
+                    if (modal === editModal) closeEditModal();
+                    else if (modal === deleteModal) closeDeleteModal();
+                    else if (modal === savedInvoiceActionModal) closeSavedInvoiceActionModal();
+                    else if (modal === deleteSavedInvoiceModal) closeDeleteSavedInvoiceModal();
+                }
+            });
         });
 
     </script>
