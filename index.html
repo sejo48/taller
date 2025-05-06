@@ -10,7 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
+
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png" type="image/png">
+    <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Facturas TFR"> <meta name="application-name" content="Facturas TFR"> <style>
         /* Estilos base */
         body {
             font-family: 'Inter', sans-serif;
@@ -74,7 +79,6 @@
             .modal-buttons { flex-direction: column; align-items: stretch; }
             .modal-buttons button { width: 100%; margin-bottom: 0.5rem; margin-right: 0; }
             .header-container img { height: 6rem; }
-            /* Asegurar que los botones de factura (imprimir, pdf, editar) se apilen bien */
             #invoiceView .main-action-buttons button { width: 100%; margin-right: 0; margin-bottom: 0.75rem; }
         }
         /* --- Fin Media Query --- */
@@ -88,8 +92,7 @@
             .invoice-view footer p { color: #555 !important; }
             th { background-color: #eee !important; color: #333 !important; }
             input { background-color: white !important; border-color: #ccc !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            /* Ocultar elementos no deseados al imprimir */
-            #formView, #listView, .modal, button:not(.print-me), .header-container img, .btn-pdf, .btn-back, .btn-edit-invoice /* Ocultar botones específicos */ { display: none !important; }
+            #formView, #listView, .modal, button:not(.print-me), .header-container img, .btn-pdf, .btn-back, .btn-edit-invoice { display: none !important; }
             #invoiceView { display: block !important; border: none !important; padding: 15px !important; margin: 0 !important; box-shadow: none !important; }
             #invoiceView header h1 { margin-top: 0 !important; }
             table { margin-top: 15px; margin-bottom: 15px; box-shadow: none !important; border-radius: 0 !important; overflow: visible !important; }
@@ -358,6 +361,10 @@
             // Ocultar botones temporalmente para la captura
             const buttonsToHide = invoiceElement.querySelectorAll('.main-action-buttons');
             buttonsToHide.forEach(btnDiv => btnDiv.style.visibility = 'hidden');
+             // Ocultar logo temporalmente si está dentro de invoiceView (ajustar si es necesario)
+            const logoInInvoice = invoiceElement.querySelector('#logo-shared'); // Asumiendo que el logo está dentro
+            if (logoInInvoice) logoInInvoice.style.visibility = 'hidden';
+
 
             html2canvas(invoiceElement, {
                 scale: 2, // Aumentar escala para mejor resolución
@@ -382,14 +389,18 @@
                 pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
                 pdf.save(filename);
 
-                 // Volver a mostrar botones
+                 // Volver a mostrar botones y logo
                  buttonsToHide.forEach(btnDiv => btnDiv.style.visibility = 'visible');
+                 if (logoInInvoice) logoInInvoice.style.visibility = 'visible';
+
 
             }).catch(error => {
                  console.error("Error al generar el PDF:", error);
                  alert("Hubo un error al generar el PDF. Revise la consola para más detalles.");
-                 // Asegurarse de volver a mostrar botones incluso si hay error
+                 // Asegurarse de volver a mostrar botones y logo incluso si hay error
                  buttonsToHide.forEach(btnDiv => btnDiv.style.visibility = 'visible');
+                 if (logoInInvoice) logoInInvoice.style.visibility = 'visible';
+
             });
         }
 
