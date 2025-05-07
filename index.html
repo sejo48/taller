@@ -32,8 +32,8 @@
         .btn-save-edit { background-color: #2563eb; } .btn-save-edit:hover { background-color: #1d4ed8; }
         .btn-delete-from-edit, .btn-delete-list { background-color: #dc2626; }
         .btn-delete-from-edit:hover, .btn-delete-list:hover { background-color: #b91c1c; }
-        .btn-delete-cancel, .btn-cancel-edit, .btn-cancel-action { background-color: #e5e7eb; color: #1f2937; } 
-        .btn-delete-cancel:hover, .btn-cancel-edit:hover, .btn-cancel-action:hover { background-color: #d1d5db; } 
+        .btn-delete-cancel, .btn-cancel-edit, .btn-cancel-action { background-color: #e5e7eb; color: #1f2937; }
+        .btn-delete-cancel:hover, .btn-cancel-edit:hover, .btn-cancel-action:hover { background-color: #d1d5db; }
         .btn-view-action { background-color: #4f46e5; /* indigo-600 */ } .btn-view-action:hover { background-color: #4338ca; }
         .btn-list-nav { background-color: #6b7280; } .btn-list-nav:hover { background-color: #4b5563; }
         /* .btn-edit-invoice se define más abajo para la vista de factura */
@@ -45,27 +45,27 @@
 
         .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.6); }
         .modal-content { background-color: #ffffff; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); padding: 1.5rem; width: 90%; max-width: 500px; }
-        
+
         #invoiceView.active-fullscreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #ffffff; 
+            background-color: #ffffff;
             z-index: 1000; display: flex; flex-direction: column;
             padding: 0; margin: 0; border-radius: 0; box-shadow: none; border: none;
         }
 
-        #invoiceView.active-fullscreen .invoice-header-container { 
-            display: flex; justify-content: space-between; align-items: flex-start; 
-            padding: 1rem; border-bottom: 2px solid #343a40; 
+        #invoiceView.active-fullscreen .invoice-header-container {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 1rem; border-bottom: 2px solid #343a40;
             background-color: #f8f9fa; flex-shrink: 0;
         }
         #invoiceView.active-fullscreen .invoice-logo-container {
-            flex-basis: 30%; max-width: 120px; 
+            flex-basis: 30%; max-width: 120px;
         }
         #invoiceView.active-fullscreen #invoiceCompanyLogo {
             display: block; max-height: 70px; width: auto;
         }
         #invoiceView.active-fullscreen .invoice-company-details {
-            flex-basis: 70%; text-align: right; 
+            flex-basis: 70%; text-align: right;
         }
         #invoiceView.active-fullscreen #invoiceCompanyName {
             font-size: 1.1rem; font-weight: 700; color: #212529; margin-bottom: 0.25rem;
@@ -74,9 +74,9 @@
             font-size: 0.75rem; color: #495057; line-height: 1.3; margin-bottom: 0.1rem;
         }
 
-        #invoiceView.active-fullscreen .invoice-meta-info { 
+        #invoiceView.active-fullscreen .invoice-meta-info {
             display: flex; justify-content: space-between;
-            padding: 0.5rem 1rem; background-color: #e9ecef; 
+            padding: 0.5rem 1rem; background-color: #e9ecef;
             font-size: 0.8rem; font-weight: 600; color: #343a40;
             border-bottom: 1px solid #dee2e6; flex-shrink: 0;
         }
@@ -84,12 +84,12 @@
 
         #invoiceView.active-fullscreen .invoice-content-area {
             flex-grow: 1; overflow-y: auto; padding: 1rem;
-            background-color: #ffffff; 
+            background-color: #ffffff;
         }
 
         #invoiceView.active-fullscreen .client-info {
             padding: 0.75rem; margin-bottom: 1rem;
-            border: 1px solid #ced4da; border-radius: 0.375rem; 
+            border: 1px solid #ced4da; border-radius: 0.375rem;
             background-color: #f8f9fa;
         }
         #invoiceView.active-fullscreen .client-info p {
@@ -122,18 +122,18 @@
             border-bottom: none;
         }
 
-        #invoiceView.active-fullscreen .total-section { 
+        #invoiceView.active-fullscreen .total-section {
             margin-top: 1rem; padding-top: 1rem;
-            border-top: 2px solid #343a40; 
+            border-top: 2px solid #343a40;
         }
         #invoiceView.active-fullscreen .total { text-align: right; }
         #invoiceView.active-fullscreen .total strong {
             font-size: 1rem; color: #343a40; font-weight: 700;
         }
         #invoiceView.active-fullscreen #invoiceTotalAmount {
-            font-size: 1.4rem; font-weight: 700; color: #0d6efd; 
+            font-size: 1.4rem; font-weight: 700; color: #0d6efd;
         }
-        
+
         #invoiceView.active-fullscreen .invoice-notes {
             margin-top: 1.5rem; padding: 0.75rem;
             background-color: #f8f9fa; border-radius: 0.375rem;
@@ -145,7 +145,7 @@
             color: #343a40; font-weight: 600;
         }
 
-        #invoiceView.active-fullscreen footer.invoice-footer-message { 
+        #invoiceView.active-fullscreen footer.invoice-footer-message {
             padding: 1rem; text-align: center; font-size: 0.8rem;
             color: #6c757d; border-top: 1px solid #dee2e6; margin-top: 1rem;
             background-color: #f8f9fa; flex-shrink: 0;
@@ -155,7 +155,7 @@
         #invoiceView.active-fullscreen #footerCompanyAddress { display: none; }
 
         #invoiceView.active-fullscreen .main-action-buttons {
-            padding: 0.75rem; background-color: #343a40; 
+            padding: 0.75rem; background-color: #343a40;
             width: 100%; box-sizing: border-box; display: flex;
             flex-wrap: wrap; justify-content: space-around; gap: 0.5rem;
             flex-shrink: 0;
@@ -164,27 +164,45 @@
             flex: 1 1 calc(45% - 1rem); /* Ajustado para que quepan más botones si es necesario */
             min-width: 100px; /* Reducido un poco */
             margin: 0.25rem !important; font-size: 0.80rem; padding: 0.6rem 0.4rem; /* Ajustado */
-            border-radius: 0.375rem; 
+            border-radius: 0.375rem;
         }
         /* Colores específicos para botones en la vista de factura */
-        #invoiceView.active-fullscreen .main-action-buttons #btnBackAction { background-color: #6c757d; } 
+        #invoiceView.active-fullscreen .main-action-buttons #btnBackAction { background-color: #6c757d; }
         #invoiceView.active-fullscreen .main-action-buttons #btnBackAction:hover { background-color: #5a6268; }
-        #invoiceView.active-fullscreen .main-action-buttons #btnPrintAction { background-color: #0d6efd; } 
+        #invoiceView.active-fullscreen .main-action-buttons #btnPrintAction { background-color: #0d6efd; }
         #invoiceView.active-fullscreen .main-action-buttons #btnPrintAction:hover { background-color: #0b5ed7; }
-        #invoiceView.active-fullscreen .main-action-buttons #btnPdfAction { background-color: #198754; } 
+        #invoiceView.active-fullscreen .main-action-buttons #btnPdfAction { background-color: #198754; }
         #invoiceView.active-fullscreen .main-action-buttons #btnPdfAction:hover { background-color: #157347; }
-        #invoiceView.active-fullscreen .main-action-buttons #editInvoiceButton { background-color: #ffc107; color: #000; } 
+        #invoiceView.active-fullscreen .main-action-buttons #editInvoiceButton { background-color: #ffc107; color: #000; }
         #invoiceView.active-fullscreen .main-action-buttons #editInvoiceButton:hover { background-color: #e0a800; }
         #invoiceView.active-fullscreen .main-action-buttons #btnPrepareCapture { background-color: #17a2b8; } /* Teal para modo captura */
         #invoiceView.active-fullscreen .main-action-buttons #btnPrepareCapture:hover { background-color: #138496; }
-        
+
         /* Estilos para el modo captura */
-        #invoiceView.capture-mode #editInvoiceButton,
-        #invoiceView.capture-mode #btnPrintAction,
-        #invoiceView.capture-mode #btnPdfAction {
-            display: none !important;
+        #invoiceView.capture-mode {
+             /* Asegura que el contenido pueda desplazarse si es más largo que la pantalla */
+            overflow-y: auto !important;
+            /* Oculta la barra de botones */
         }
-        
+        #invoiceView.capture-mode .main-action-buttons {
+             display: none !important; /* Oculta la barra de botones en modo captura */
+        }
+        /* Asegura que el área de contenido no tenga un overflow restringido en modo captura */
+        #invoiceView.capture-mode .invoice-content-area {
+            overflow-y: visible !important;
+            flex-grow: 0 !important; /* No crece para ocupar espacio, solo muestra contenido */
+            height: auto !important; /* Permite que el contenido determine la altura */
+        }
+        /* Ajustes de padding/margin si es necesario para la captura */
+        #invoiceView.capture-mode .invoice-header-container,
+        #invoiceView.capture-mode .invoice-meta-info,
+        #invoiceView.capture-mode .invoice-content-area,
+        #invoiceView.capture-mode footer.invoice-footer-message {
+             padding-left: 1rem !important; /* Ajustar padding si es necesario */
+             padding-right: 1rem !important; /* Ajustar padding si es necesario */
+        }
+
+
         body.invoice-fullscreen-mode .header-container { display: none !important; }
         body.invoice-fullscreen-mode > .container {
             max-width: 100% !important; padding: 0 !important; margin: 0 !important;
@@ -201,7 +219,7 @@
             .repair-details-grid { grid-template-columns: 1fr; }
             .repair-details-grid .md\:col-span-2 { grid-column: span 1 / span 1; }
             table th, table td { padding: 0.5rem 0.75rem; }
-            .total:not(#invoiceView.active-fullscreen .total) { font-size: 1rem; } 
+            .total:not(#invoiceView.active-fullscreen .total) { font-size: 1rem; }
             .modal-content { width: 95%; padding: 1.5rem; max-width: none; }
             .modal-buttons { flex-direction: column; align-items: stretch; }
             .modal-buttons button { width: 100%; margin-bottom: 0.5rem; margin-right: 0; }
@@ -219,7 +237,7 @@
             h1, h2, strong, .total span { color: #000 !important; }
             #invoiceView.active-fullscreen {
                 position: static !important; height: auto !important; overflow: visible !important;
-                border: 1px solid #ccc !important; 
+                border: 1px solid #ccc !important;
             }
             #invoiceView.active-fullscreen .invoice-header-container,
             #invoiceView.active-fullscreen .invoice-meta-info,
@@ -228,15 +246,15 @@
             #invoiceView.active-fullscreen .total-section,
             #invoiceView.active-fullscreen .invoice-notes,
             #invoiceView.active-fullscreen footer.invoice-footer-message {
-                 background-color: white !important; 
+                 background-color: white !important;
             }
             #invoiceView.active-fullscreen .invoice-content-area { overflow: visible !important; padding: 0.5rem !important; }
             #invoiceView.active-fullscreen .main-action-buttons { display: none !important; }
-            
+
             .form-group label, .invoice-view header p, .invoice-view footer p, .invoice-view .client-info p strong { color: #333 !important; }
             .invoice-view footer p { color: #555 !important; }
             th { background-color: #eee !important; color: #333 !important; }
-            #invoiceView.active-fullscreen #invoiceRepairsTable th { background-color: #ddd !important; color: #000 !important;} 
+            #invoiceView.active-fullscreen #invoiceRepairsTable th { background-color: #ddd !important; color: #000 !important;}
 
             input { background-color: white !important; border-color: #ccc !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             #formView, #listView, .modal, .header-container img:not(#invoiceCompanyLogo), .btn-pdf, .btn-back, .btn-edit-invoice { display: none !important; }
@@ -296,7 +314,7 @@
                 <div>Factura #: <span id="invoiceIdDisplay"></span></div>
                 <div>Fecha: <span id="invoiceDateDisplay"></span></div>
             </div>
-            
+
             <div class="invoice-content-area">
                 <div class="client-info">
                     <p><strong class="mr-2">Cliente:</strong> <span id="invoiceClientName"></span></p>
@@ -314,7 +332,7 @@
                         <strong>Total:</strong> <span id="invoiceTotalAmount" class="ml-4"></span>
                     </div>
                 </div>
-                
+
                 <div class="invoice-notes">
                     <strong>Notas Adicionales:</strong>
                     <p id="additionalNotesText">Este es un espacio para notas o términos y condiciones. Puede ser modificado o llenado dinámicamente si se añade un campo en el formulario.</p>
@@ -376,12 +394,12 @@
     </div>
 
     <script>
-        const { jsPDF } = window.jspdf; 
+        const { jsPDF } = window.jspdf;
 
         let currentRepairs = [];
         let rowToEdit = null;
         let invoiceToDeleteId = null;
-        let invoiceToEditId = null; 
+        let invoiceToEditId = null;
         let previousView = 'formView';
 
         const WORKSHOP_DATA = {
@@ -391,7 +409,7 @@
             logoUrl: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjOsxEyPDbIB2t7GfguWEg9ENt3cO_vo5iCwj_E5RxIiV97PeNq1LfiahoPHBe4ymSRGizStf2ncYdvmDlcY_fbot2dXwDZpNoBTmp0NQXAZb7HbeHuMfzQjGhtt0I2Mi3S-FdRAq3H9J52pZPq3hScVVvk8Qoec2myh-4SDpoH-xHTaFm90U2C5cfrVW8/w480-h480/ChatGPT%20Image%205%20may%202025,%2008_06_42%20p.m..png",
             logoBase64: "" // <-- PEGA AQUÍ TU CADENA BASE64 COMPLETA (ej: "data:image/png;base64,iVBORw0KGgo...")
         };
-        const CURRENT_INVOICE_STORAGE_KEY = 'currentInvoiceState_v3_exampleStyle'; 
+        const CURRENT_INVOICE_STORAGE_KEY = 'currentInvoiceState_v3_exampleStyle';
         const SAVED_INVOICES_STORAGE_KEY = 'savedInvoicesList_v3_exampleStyle';
 
         const companyNameInput = document.getElementById('companyName');
@@ -413,27 +431,28 @@
         const savedInvoicesTableBody = document.querySelector('#savedInvoicesTable tbody');
         const editInvoiceButton = document.getElementById('editInvoiceButton');
         const invoiceCompanyLogo = document.getElementById('invoiceCompanyLogo');
-        const additionalNotesText = document.getElementById('additionalNotesText'); 
+        const additionalNotesText = document.getElementById('additionalNotesText');
 
         function formatCurrency(amount) { const num = Number(amount); return isNaN(num) ? '₡0.00' : num.toLocaleString('es-CR', { style: 'currency', currency: 'CRC', minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
         function calculateTotal() { return currentRepairs.reduce((sum, repair) => sum + repair.price, 0); }
         function updateTotalDisplay() { totalAmountSpan.textContent = formatCurrency(calculateTotal()); }
         function generateInvoiceId() { return `FACT-${Date.now()}`; }
-        function formatDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00Z'); return isNaN(dateObj.getTime()) ? dateString : dateObj.toLocaleDateString('es-CR'); } catch { return dateString; } }
+        function formatDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00Z'); return isNaN(dateObj.getTime()) ? dateObj.toLocaleDateString('es-CR') : dateObj.toLocaleDateString('es-CR'); } catch { return dateString; } }
         function formatFullDate(dateString) { try { const dateObj = new Date(dateString + 'T00:00:00Z'); return isNaN(dateObj.getTime()) ? dateString : dateObj.toLocaleDateString('es-CR', { year: 'numeric', month: 'long', day: 'numeric' }); } catch { return dateString; } }
+
 
         function saveCurrentState() { localStorage.setItem(CURRENT_INVOICE_STORAGE_KEY, JSON.stringify({ clientName: clientNameInput.value, invoiceDate: invoiceDateInput.value, repairs: currentRepairs })); }
         function loadCurrentState() { const s = localStorage.getItem(CURRENT_INVOICE_STORAGE_KEY); if (s) { try { const state = JSON.parse(s); clientNameInput.value = state.clientName || ''; invoiceDateInput.value = state.invoiceDate || new Date().toISOString().split('T')[0]; currentRepairs = state.repairs || []; renderRepairsTable(); } catch (e) { console.error("Error cargando estado:", e); currentRepairs = []; localStorage.removeItem(CURRENT_INVOICE_STORAGE_KEY); } } else { invoiceDateInput.value = new Date().toISOString().split('T')[0]; } }
         function getSavedInvoices() { const s = localStorage.getItem(SAVED_INVOICES_STORAGE_KEY); if (s) { try { return JSON.parse(s).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); } catch (e) { console.error("Error obteniendo facturas:", e); return []; } } return []; }
         function saveInvoices(invoices) { localStorage.setItem(SAVED_INVOICES_STORAGE_KEY, JSON.stringify(invoices)); }
-        function saveInvoiceToList(invoiceData) { const list = getSavedInvoices(); list.unshift(invoiceData); saveInvoices(list); } 
+        function saveInvoiceToList(invoiceData) { const list = getSavedInvoices(); list.unshift(invoiceData); saveInvoices(list); }
         function deleteInvoiceFromList(invoiceId) { let list = getSavedInvoices(); list = list.filter(inv => inv.id !== invoiceId); saveInvoices(list); renderInvoiceList(); }
         function clearCurrentState() { clientNameInput.value = ''; invoiceDateInput.value = new Date().toISOString().split('T')[0]; currentRepairs = []; renderRepairsTable(); localStorage.removeItem(CURRENT_INVOICE_STORAGE_KEY); }
         function updateInvoiceInList(updatedInvoiceData) {
             let invoices = getSavedInvoices();
             const index = invoices.findIndex(inv => inv.id === updatedInvoiceData.id);
             if (index !== -1) {
-                invoices[index] = { ...invoices[index], ...updatedInvoiceData, updatedAt: new Date().toISOString() }; 
+                invoices[index] = { ...invoices[index], ...updatedInvoiceData, updatedAt: new Date().toISOString() };
                 saveInvoices(invoices);
                 return true;
             }
@@ -492,14 +511,14 @@
         function populateInvoiceView(invoiceData) {
             if (invoiceData.company.logoBase64 && invoiceData.company.logoBase64.startsWith('data:image')) {
                 invoiceCompanyLogo.src = invoiceData.company.logoBase64;
-                invoiceCompanyLogo.onerror = null; 
+                invoiceCompanyLogo.onerror = null;
             } else if (invoiceData.company.logoUrl) {
                 invoiceCompanyLogo.src = invoiceData.company.logoUrl;
-                invoiceCompanyLogo.onerror = () => { 
-                    invoiceCompanyLogo.onerror = null; 
-                    invoiceCompanyLogo.src='https://placehold.co/120x70/e2e8f0/94a3b8?text=Logo'; 
+                invoiceCompanyLogo.onerror = () => {
+                    invoiceCompanyLogo.onerror = null;
+                    invoiceCompanyLogo.src='https://placehold.co/120x70/e2e8f0/94a3b8?text=Logo';
                 };
-            } else { 
+            } else {
                 invoiceCompanyLogo.src='https://placehold.co/120x70/e2e8f0/94a3b8?text=Logo';
                 invoiceCompanyLogo.onerror = null;
             }
@@ -508,16 +527,16 @@
             document.getElementById('invoiceCompanyName').textContent = invoiceData.company.name;
             document.getElementById('invoiceCompanyPhone').textContent = `Tel: ${invoiceData.company.phone}`;
             document.getElementById('invoiceCompanyAddress').textContent = invoiceData.company.address;
-            
+
             document.getElementById('invoiceIdDisplay').textContent = invoiceData.id;
             document.getElementById('invoiceDateDisplay').textContent = formatFullDate(invoiceData.invoiceDate);
             document.getElementById('invoiceClientName').textContent = invoiceData.clientName;
-            
+
             const tableBody = document.querySelector('#invoiceRepairsTable tbody'); tableBody.innerHTML = '';
             invoiceData.repairs.forEach((repair, i) => { const r = tableBody.insertRow(); const c1 = r.insertCell(0); const c2 = r.insertCell(1); c1.textContent = repair.description; c2.textContent = formatCurrency(repair.price); c1.classList.add('p-3', 'align-middle'); c2.classList.add('p-3', 'text-right', 'align-middle'); if (i < invoiceData.repairs.length -1) {r.classList.add('border-b', 'border-gray-200')} });
-            
+
             document.getElementById('invoiceTotalAmount').textContent = formatCurrency(invoiceData.total);
-            
+
             const footerCompanyName = document.getElementById('footerCompanyName');
             const footerCompanyPhone = document.getElementById('footerCompanyPhone');
             const footerCompanyAddress = document.getElementById('footerCompanyAddress');
@@ -535,7 +554,7 @@
             invoiceView.classList.remove('active-fullscreen');
             invoiceView.classList.remove('capture-mode'); // Salir del modo captura al cambiar de vista
             document.body.classList.remove('invoice-fullscreen-mode');
-            
+
             // Resetear botón de captura si existe y estamos saliendo de invoiceView
             const btnCapture = document.getElementById('btnPrepareCapture');
             if (btnCapture && viewToShow !== 'invoiceView') {
@@ -546,7 +565,7 @@
 
 
             if (viewToShow === 'invoiceView') {
-                invoiceView.style.display = 'flex'; 
+                invoiceView.style.display = 'flex';
                 invoiceView.classList.add('active-fullscreen');
                 document.body.classList.add('invoice-fullscreen-mode');
             } else if (viewToShow === 'formView') {
@@ -555,9 +574,9 @@
                 listView.style.display = 'block';
             }
         }
-        
+
         function generateAndSaveInvoice() {
-            const companyName = companyNameInput.value.trim() || WORKSHOP_DATA.name; 
+            const companyName = companyNameInput.value.trim() || WORKSHOP_DATA.name;
             const clientName = clientNameInput.value.trim();
             const invoiceDate = invoiceDateInput.value;
             let errors = [];
@@ -566,33 +585,33 @@
             if (currentRepairs.length === 0) errors.push("Al menos una reparación/servicio");
             if (errors.length > 0) return alert(`Por favor, complete los siguientes campos: ${errors.join(', ')}.`);
 
-            const invoiceId = invoiceToEditId || generateInvoiceId(); 
+            const invoiceId = invoiceToEditId || generateInvoiceId();
             const total = calculateTotal();
             const invoiceData = {
                 id: invoiceId,
-                company: { 
-                    name: companyName, 
-                    phone: WORKSHOP_DATA.phone, 
-                    address: WORKSHOP_DATA.address, 
+                company: {
+                    name: companyName,
+                    phone: WORKSHOP_DATA.phone,
+                    address: WORKSHOP_DATA.address,
                     logoUrl: WORKSHOP_DATA.logoUrl,
-                    logoBase64: WORKSHOP_DATA.logoBase64 
+                    logoBase64: WORKSHOP_DATA.logoBase64
                 },
                 clientName, invoiceDate, repairs: [...currentRepairs], total,
                 createdAt: invoiceToEditId ? getSavedInvoices().find(inv => inv.id === invoiceToEditId)?.createdAt || new Date().toISOString() : new Date().toISOString(),
             };
 
-            if (invoiceToEditId) { 
+            if (invoiceToEditId) {
                 updateInvoiceInList(invoiceData);
-                invoiceToEditId = null; 
+                invoiceToEditId = null;
             } else {
                 saveInvoiceToList(invoiceData);
             }
-            
+
             populateInvoiceView(invoiceData);
-            previousView = 'formView'; 
-            editInvoiceButton.classList.add('hidden'); 
+            previousView = 'formView';
+            editInvoiceButton.classList.add('hidden');
             showView('invoiceView');
-            clearCurrentState(); 
+            clearCurrentState();
         }
 
         function viewSavedInvoice(invoiceId) {
@@ -600,15 +619,15 @@
             const invoiceData = savedInvoices.find(inv => inv.id === invoiceId);
             if (invoiceData) {
                 const companyDataForView = {
-                    ...invoiceData.company, 
-                    logoBase64: WORKSHOP_DATA.logoBase64, 
-                    logoUrl: WORKSHOP_DATA.logoUrl 
+                    ...invoiceData.company,
+                    logoBase64: WORKSHOP_DATA.logoBase64,
+                    logoUrl: WORKSHOP_DATA.logoUrl
                 };
                 const invoiceDataForView = {...invoiceData, company: companyDataForView};
 
                 populateInvoiceView(invoiceDataForView);
                 previousView = 'listView';
-                editInvoiceButton.classList.remove('hidden'); 
+                editInvoiceButton.classList.remove('hidden');
                 showView('invoiceView');
             } else {
                 alert("Factura no encontrada.");
@@ -616,7 +635,7 @@
         }
 
         function showListView() { renderInvoiceList(); showView('listView'); }
-        
+
         function goBack() {
             // Salir del modo captura si está activo
             if (invoiceView.classList.contains('capture-mode')) {
@@ -628,14 +647,14 @@
                     btnCapture.classList.add('bg-teal-500', 'hover:bg-teal-600'); // Color original
                 }
             }
-            editInvoiceButton.classList.add('hidden'); 
+            editInvoiceButton.classList.add('hidden');
             if (previousView === 'listView') {
                 showListView();
             } else {
                 goBackToForm();
             }
         }
-        function goBackToForm() { 
+        function goBackToForm() {
             // Asegurarse de salir del modo captura también al ir directo al formulario
              if (invoiceView.classList.contains('capture-mode')) {
                 invoiceView.classList.remove('capture-mode');
@@ -646,8 +665,8 @@
                     btnCapture.classList.add('bg-teal-500', 'hover:bg-teal-600');
                 }
             }
-            editInvoiceButton.classList.add('hidden'); 
-            showView('formView'); 
+            editInvoiceButton.classList.add('hidden');
+            showView('formView');
         }
 
         function editSavedInvoice() {
@@ -656,24 +675,26 @@
             const invoiceData = getSavedInvoices().find(inv => inv.id === invoiceId);
             if (!invoiceData) return alert("Factura guardada no encontrada para editar.");
 
-            companyNameInput.value = invoiceData.company.name; 
+            companyNameInput.value = invoiceData.company.name;
             clientNameInput.value = invoiceData.clientName;
             invoiceDateInput.value = invoiceData.invoiceDate;
-            currentRepairs = [...invoiceData.repairs]; 
-            
-            invoiceToEditId = invoiceData.id; 
+            currentRepairs = [...invoiceData.repairs];
 
-            renderRepairsTable(); 
-            updateTotalDisplay(); 
-            
-            showView('formView'); 
+            invoiceToEditId = invoiceData.id;
+
+            renderRepairsTable();
+            updateTotalDisplay();
+
+            showView('formView');
             alert("Datos de la factura cargados para edición. Realice los cambios y luego 'Genere y Guarde Factura' para actualizarla.");
         }
-        
+
         // Función para alternar el modo captura de pantalla
         function prepareForCapture(buttonElement) {
             const invoiceV = document.getElementById('invoiceView'); // Renombrado para evitar conflicto con variable global
             const editBtn = document.getElementById('editInvoiceButton');
+            const printBtn = document.getElementById('btnPrintAction');
+            const pdfBtn = document.getElementById('btnPdfAction');
 
             if (invoiceV.classList.contains('capture-mode')) {
                 // Salir del modo captura
@@ -682,21 +703,30 @@
                 buttonElement.classList.replace('bg-yellow-500', 'bg-teal-500'); // Color original del botón de captura
                 buttonElement.classList.replace('hover:bg-yellow-600', 'hover:bg-teal-600');
 
-                // Restaurar visibilidad del botón de editar según la lógica original
-                const currentInvoiceId = invoiceV.dataset.currentInvoiceId;
-                if (previousView === 'listView' && currentInvoiceId && editBtn) { // Verificar que editBtn exista
-                    editBtn.classList.remove('hidden');
-                } else if (editBtn) {
-                    editBtn.classList.add('hidden');
-                }
-                // Los otros botones (Imprimir, PDF) se mostrarán por CSS al quitar 'capture-mode'
+                // Restaurar visibilidad de botones de acción
+                if (editBtn) editBtn.classList.remove('hidden'); // El botón de editar se controla por previousView y dataset.currentInvoiceId
+                if (printBtn) printBtn.style.display = ''; // Restaurar display original
+                if (pdfBtn) pdfBtn.style.display = ''; // Restaurar display original
+
+
+                // Asegurar que el botón de editar se oculte si no estamos en la vista de una factura guardada
+                 const currentInvoiceId = invoiceV.dataset.currentInvoiceId;
+                 if (previousView !== 'listView' || !currentInvoiceId) {
+                     if (editBtn) editBtn.classList.add('hidden');
+                 }
+
+
             } else {
                 // Entrar en modo captura
                 invoiceV.classList.add('capture-mode');
                 buttonElement.textContent = "Restaurar Botones";
                 buttonElement.classList.replace('bg-teal-500', 'bg-yellow-500'); // Color indicativo del modo captura
                 buttonElement.classList.replace('hover:bg-teal-600', 'hover:bg-yellow-600');
-                // CSS se encarga de ocultar #editInvoiceButton, #btnPrintAction, #btnPdfAction
+
+                // Ocultar otros botones en modo captura
+                if (editBtn) editBtn.classList.add('hidden');
+                if (printBtn) printBtn.style.display = 'none';
+                if (pdfBtn) pdfBtn.style.display = 'none';
             }
         }
 
@@ -715,41 +745,41 @@
 
             const buttonsContainer = invoiceElement.querySelector('.main-action-buttons');
             const originalButtonsDisplay = buttonsContainer.style.display;
-            buttonsContainer.style.display = 'none'; 
+            buttonsContainer.style.display = 'none';
 
             window.setTimeout(() => {
                 html2canvas(invoiceElement, {
-                    scale: 2, 
-                    useCORS: true, 
+                    scale: 2,
+                    useCORS: true,
                     logging: false,
-                    imageTimeout: 15000, 
+                    imageTimeout: 15000,
                     onclone: (documentClone) => {
                         const clonedInvoiceView = documentClone.getElementById('invoiceView');
                         if (clonedInvoiceView) {
-                            clonedInvoiceView.style.display = 'flex'; 
-                            clonedInvoiceView.style.flexDirection = 'column'; 
-                            clonedInvoiceView.style.position = 'relative'; 
-                            clonedInvoiceView.style.width = '210mm'; 
-                            clonedInvoiceView.style.height = 'auto'; 
+                            clonedInvoiceView.style.display = 'flex';
+                            clonedInvoiceView.style.flexDirection = 'column';
+                            clonedInvoiceView.style.position = 'relative';
+                            clonedInvoiceView.style.width = '210mm';
+                            clonedInvoiceView.style.height = 'auto';
                             clonedInvoiceView.style.margin = '0';
-                            clonedInvoiceView.style.padding = '10mm'; 
+                            clonedInvoiceView.style.padding = '10mm';
                             clonedInvoiceView.style.boxSizing = 'border-box';
                             clonedInvoiceView.style.border = 'none';
                             clonedInvoiceView.style.boxShadow = 'none';
-                            clonedInvoiceView.style.backgroundColor = '#ffffff'; 
-                            
+                            clonedInvoiceView.style.backgroundColor = '#ffffff';
+
                             const clonedContentArea = clonedInvoiceView.querySelector('.invoice-content-area');
                             if(clonedContentArea) {
-                                clonedContentArea.style.overflowY = 'visible'; 
+                                clonedContentArea.style.overflowY = 'visible';
                                 clonedContentArea.style.height = 'auto';
                             }
                             const clonedButtons = clonedInvoiceView.querySelector('.main-action-buttons');
-                            if (clonedButtons) clonedButtons.style.display = 'none'; 
-                            
+                            if (clonedButtons) clonedButtons.style.display = 'none';
+
                             const sectionsToEnsureWhiteBg = [
-                                '.invoice-header-container', 
-                                '.invoice-meta-info', 
-                                '.client-info', 
+                                '.invoice-header-container',
+                                '.invoice-meta-info',
+                                '.client-info',
                                 '.invoice-notes',
                                 'footer.invoice-footer-message'
                             ];
@@ -760,12 +790,12 @@
 
                             const clonedLogoContainer = clonedInvoiceView.querySelector('.invoice-logo-container');
                             if (clonedLogoContainer) {
-                                clonedLogoContainer.style.display = 'block'; 
+                                clonedLogoContainer.style.display = 'block';
                                 clonedLogoContainer.style.visibility = 'visible';
                             }
                             const clonedLogo = clonedInvoiceView.querySelector('#invoiceCompanyLogo');
                             if (clonedLogo) {
-                                clonedLogo.style.display = 'block'; 
+                                clonedLogo.style.display = 'block';
                                 clonedLogo.style.visibility = 'visible';
                             }
                         }
@@ -775,16 +805,16 @@
                     const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
                     const pdfWidth = pdf.internal.pageSize.getWidth();
                     const pdfHeight = pdf.internal.pageSize.getHeight();
-                    const canvasScaledWidth = canvas.width / 2; 
+                    const canvasScaledWidth = canvas.width / 2;
                     const canvasScaledHeight = canvas.height / 2;
-                    
+
                     const ratio = Math.min(pdfWidth / canvasScaledWidth, pdfHeight / canvasScaledHeight);
                     const imgActualWidth = canvasScaledWidth * ratio;
                     const imgActualHeight = canvasScaledHeight * ratio;
-                    
+
                     const xOffset = (pdfWidth - imgActualWidth) / 2;
-                    
-                    let position = 0; 
+
+                    let position = 0;
                     let heightLeft = imgActualHeight;
 
                     if (imgActualHeight <= pdfHeight) { // Si cabe en una página
@@ -798,7 +828,7 @@
                         while(srcY < canvas.height) {
                             const remainingCanvasHeight = canvas.height - srcY;
                             const currentChunkCanvasHeight = Math.min(pageCanvasHeight, remainingCanvasHeight);
-                            
+
                             const tempCanvas = document.createElement('canvas');
                             tempCanvas.width = canvas.width;
                             tempCanvas.height = currentChunkCanvasHeight;
@@ -809,17 +839,17 @@
                             const chunkImageActualHeight = (currentChunkCanvasHeight / 2) * ratio;
 
 
-                            if (srcY > 0) { 
+                            if (srcY > 0) {
                                 pdf.addPage();
                             }
-                            pdf.addImage(chunkImgData, 'PNG', xOffset, 0, imgActualWidth, chunkImageActualHeight ); 
+                            pdf.addImage(chunkImgData, 'PNG', xOffset, 0, imgActualWidth, chunkImageActualHeight );
                             srcY += currentChunkCanvasHeight;
                             heightLeft -= pdfHeight; // Aproximación
                         }
                     }
-                    
+
                     pdf.save(filename);
-                    buttonsContainer.style.display = originalButtonsDisplay; 
+                    buttonsContainer.style.display = originalButtonsDisplay;
                     // Restaurar modo captura si estaba activo
                     if (isInCaptureMode) {
                         invoiceElement.classList.add('capture-mode');
@@ -832,33 +862,16 @@
                     }
                     alert("Hubo un error al generar el PDF. Revise la consola para más detalles.");
                 });
-            }, 250); 
+            }, 250);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            companyNameInput.value = WORKSHOP_DATA.name; 
-            loadCurrentState(); 
-            renderRepairsTable(); 
-        });
 
-        window.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape') {
-                if (editModal.style.display === 'flex') closeEditModal();
-                if (deleteModal.style.display === 'flex') closeDeleteModal();
-                if (savedInvoiceActionModal.style.display === 'flex') closeSavedInvoiceActionModal();
-                if (deleteSavedInvoiceModal.style.display === 'flex') closeDeleteSavedInvoiceModal();
-            }
-        });
-        [editModal, deleteModal, savedInvoiceActionModal, deleteSavedInvoiceModal].forEach(modal => {
-            modal.addEventListener('click', (event) => {
-                if (event.target === modal) { 
-                    if (modal === editModal) closeEditModal();
-                    else if (modal === deleteModal) closeDeleteModal();
-                    else if (modal === savedInvoiceActionModal) closeSavedInvoiceActionModal();
-                    else if (modal === deleteSavedInvoiceModal) closeDeleteSavedInvoiceModal();
-                }
-            });
-        });
+        // Inicializar al cargar la página
+        window.onload = function() {
+            loadCurrentState();
+            // Establecer el valor predeterminado para el nombre de la empresa
+            companyNameInput.value = WORKSHOP_DATA.name;
+        };
 
     </script>
 </body>
